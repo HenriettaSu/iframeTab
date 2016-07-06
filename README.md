@@ -59,11 +59,11 @@ HTML標籤可以隨意更換，只要確保 `tabLi` 確實包含在 `tabUl` 之�
 同上iframe結構只要層級正確，之間添加什麼都可以。
 
 ```html
-&lt;div&gt;
-  &lt;div&gt;
-    &lt;iframe src=&quot;iframeTab-demo.html&quot; data-iframe=&quot;iframeTab-demo&quot; data-num=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; onload=&quot;iframeTab.iFrameHeight()&quot;&gt;&lt;/iframe&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
+<div>
+  <div>
+    <iframe src="iframeTab-demo.html" data-iframe="iframeTab-demo" data-num="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onload="iframeTab.iFrameHeight()"></iframe>
+  </div>
+</div>
 ```
 
 第二個div為 `tabPan`，用來存放 `&lt;iframe&gt;`，第一個為 `tabBody`，以存放 `tabPan`。
