@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>iframeTab 文檔</title>
+  <!-- Custom styling plus plugins -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../vendor/bootstrap/fonts/css/font-awesome.css" rel="stylesheet">
+  <link href="../vendor/gentelella/custom.css" rel="stylesheet">
+  <link href="../dist/css/iframeTab.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container iframe-container body">
+    <div class="right_col">
+        <div class="clearfix">
+          <div class="page-title">
+            <div class="title_left">
+              <h3>iframeTab 文檔</h3>
+            </div>
+			<div class="title_right">
+			  <div class="pull-right">
+			    <a href="#"><i class="fa fa-refresh"></i></a>
+			  </div>
+			</div>
+          </div>
+        </div>
+		<div class="row">
+		  <div class="x_panel">
+			<div class="x_title clearfix">
+			  <h2>引入 iframeTab</h2>
+		      <ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              </ul>
+            </div>
+			<div class="x_content">
+              <p>
+                基於本插件是以<a href="https://colorlib.com/polygon/gentelella/" target="_blank">Gentelella</a>為框架開發的，樣式對此框架有依賴性，但插件實際使用上對樣式沒有任何依賴性，因此不建議引用css文件。
+              </p>
+              <code>
+                &lt;!DOCTYPE html&gt; <br />
+                &lt;html&gt; <br />
+                &lt;header&gt; <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;meta charset=&quot;utf-8&quot;&gt; <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- &#24341;&#20837; iframeTab &#25991;&#20214; --&gt; <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;script src=&quot;iframeTab.min.js&quot;&gt;&lt;/script&gt; <br />
+                &lt;/header&gt; <br />
+                &lt;/html&gt;
+              </code>
+            </div>
+		  </div>
+          <div class="x_panel">
+			<div class="x_title clearfix">
+			  <h2>鏈接Dom</h2>
+		      <ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              </ul>
+            </div>
+			<div class="x_content">
+              <p>
+                <code>
+                  &lt;a href=&quot;iframeTab-demo.html&quot; data-num=&quot;0&quot;&gt;&#20027;&#38913;&lt;/a&gt; <br />
+                </code>
+                <br />
+                必須包含 <code>data-num="0"</code>，以此區別一般瀏覽器新開窗口與以iframeTab開啟的鏈接 <br />
+                <code>data-name</code> 為可選屬性，默認a標籤內文字，優先級：data-name > a.text() <br />
+                <code>data-mul</code> 為可選屬性，若存在，則此鏈接可同時多個創建窗口 <br />
+                <code>data-reload</code> 為可選屬性，若存在，則再次點擊此鏈接時，iframe將被重新加載 <br />
+              </p>
+            </div>
+		  </div>
+          <div class="x_panel">
+			<div class="x_title clearfix">
+			  <h2>標籤欄結構</h2>
+		      <ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              </ul>
+            </div>
+			<div class="x_content">
+              <p>
+                <code>
+                  &lt;ul&gt; <br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;li data-tab=&quot;iframeTab-demo&quot;&gt;&#27161;&#31844;&#19968; &lt;i data-btn=&quot;close&quot;&gt;&lt;/i&gt;&lt;/li&gt; <br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;li data-tab=&quot;&quot;&gt;&#27161;&#31844;&#20108; &lt;i data-btn=&quot;close&quot;&gt;&lt;/i&gt;&lt;/li&gt; <br />
+                  &lt;/ul&gt; <br />
+                </code>
+                <br />
+                HTML標籤可以隨意更換，只要確保 'tabLi' 確實包含在 <code>tabUl</code> 之下，包含 <code>data-btn=&quot;close&quot;</code> 的元素於 <code>tabLi</code> 下，之間添加別的元素也是沒有關係的。
+              </p>
+            </div>
+		  </div>
+          <div class="x_panel">
+			<div class="x_title clearfix">
+			  <h2>標籤欄結構</h2>
+		      <ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              </ul>
+            </div>
+			<div class="x_content">
+              <p>
+                同上iframe結構只要層級正確，之間添加什麼都可以。 <br />
+                <br />
+                <code>
+                  &lt;div&gt; <br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt; <br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;iframe src=&quot;iframeTab-demo.html&quot; data-iframe=&quot;iframeTab-demo&quot; data-num=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; onload=&quot;iframeTab.iFrameHeight()&quot;&gt;&lt;/iframe&gt;<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt; <br />
+                  &lt;/div&gt; <br />
+                </code>
+                <br />
+                第二個div為 <code>tabPan</code>，用來存放 <code>&lt;iframe&gt;</code>，第一個為 <code>tabBody</code>，以存放 <code>tabPan</code>。
+              </p>
+            </div>
+		  </div>
+          <div class="x_panel">
+			<div class="x_title clearfix">
+			  <h2>初始化 iframeTab</h2>
+		      <ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              </ul>
+            </div>
+			<div class="x_content">
+              <p>
+                <code>iframeTab.init();</code><br />
+                <br />
+                通過 <code>iframeTab.init</code> 方法即可初始化iframeTab，但我相信你會想自行配置一下。 <br />
+                <br />
+                <code>
+                  var iframeTabOption = { <br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;tabUl: '.tabs-header ul', <br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;tabLi: '.tabs-header li', <br />
+                  } <br />
+                  <br />
+                  iframeTab.init(iframeTabOption);
+                </code>
+              </p>
+            </div>
+		  </div>
+          <div class="x_panel">
+			<div class="x_title clearfix">
+			  <h2>配置項</h2>
+		      <ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              </ul>
+            </div>
+			<div class="x_content">
+              <ul class="change-log">
+                <li>
+                  <code>tabUl</code> | String
+                  <p>標籤頁模塊，[ default: '.tabs-header ul' ]</p>
+                </li>
+                <li>
+                  <code>tabLi</code> | String
+                  <p>標籤頁元素，[ default: '.tabs-header li' ]</p>
+                </li>
+                <li>
+                  <code>tabBody</code> | String
+                  <p>內容容器模塊，[ default: '.tabs-body' ]</p>
+                </li>
+                <li>
+                  <code>tabPan</code> | String
+                  <p>內容容器，[ default: '.tab-panel' ]</p>
+                </li>
+                <li>
+                  <code>closesBtnClass</code> | String
+                  <p>刪除按鈕樣式，[ default: 'fa fa-close' ]</p>
+                </li>
+                <li>
+                  <code>newTabPan</code> | String
+                  <p>包裹iframe的容器，若tabPan有修改，此處應跟隨修改，[ default: '&lt;div class=&quot;tab-panel active&quot;&gt;&lt;div class=&quot;right_col&quot; role=&quot;main&quot;&gt;&lt;/div&gt;&lt;/div&gt;' ]</p>
+                </li>
+              </ul>
+            </div>
+		  </div>
+          <div class="x_panel">
+			<div class="x_title clearfix">
+			  <h2>gulp</h2>
+		      <ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              </ul>
+            </div>
+			<div class="x_content">
+              <p>
+                因為本插件涉及iframe操作，在本地直接打開將報錯，你需要在服務器上調試，本插件提供 <code>gulp</code> 調試方式，你可以以此進行插件模擬和代碼編譯。
+              </p>
+              <ul class="change-log">
+                <li><code>gulp</code> 運行服務器并編譯所有代碼</li>
+                <li><code>gulp browser-sync</code> 運行服務器</li>
+                <li><code>gulp watch</code> 進入watch模式</li>
+                <li><code>gulp sass-to-css</code> 將sass編譯成css</li>
+                <li><code>gulp minify-css</code> 壓縮css</li>
+                <li><code>gulp jscompress</code> 壓縮js</li>
+              <ul>
+            </div>
+		  </div>
+		</div>
+    </div>
+  </div>
+  
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../vendor/gentelella/custom.js"></script>
+  <script src="../dist/js/iframeTab.min.js"></script>
+  <script>
+    var iframeTabOption = {}
+    iframeTab.init(iframeTabOption);
+  </script>
+</body>

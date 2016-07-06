@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>iframeTab 更新日誌</title>
+  <!-- Custom styling plus plugins -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../vendor/bootstrap/fonts/css/font-awesome.css" rel="stylesheet">
+  <link href="../vendor/gentelella/custom.css" rel="stylesheet">
+  <link href="../dist/css/iframeTab.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container iframe-container body">
+    <div class="right_col">
+      <div class="clearfix">
+        <div class="page-title">
+          <div class="title_left">
+            <h3>iframeTab 更新日誌</h3>
+          </div>
+		  <div class="title_right">
+			<div class="pull-right">
+			  <a href="#"><i class="fa fa-refresh"></i></a>
+			</div>
+		  </div>
+        </div>
+      </div>
+	  <div class="row">
+		<div class="x_panel">
+		  <div class="x_title clearfix">
+			<h2>V0.1.0 2016.07.05</h2>
+		    <ul class="nav navbar-right panel_toolbox">
+			  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+            </ul>
+          </div>
+		  <div class="x_content">
+            <ul class="change-log">
+              <li>不再使用 <code>data-link</code> 打開窗口。</li>
+              <li>以 <code>data-num</code> 來判別鏈接是正常打開還是iframeTab形式打開。</li>
+            </ul>
+		  </div>
+		</div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../vendor/gentelella/custom.js"></script>
+  <script src="../dist/js/iframeTab.min.js"></script>
+  <script>
+    var iframeTabOption = {}
+    iframeTab.init(iframeTabOption);
+  </script>
+</body>

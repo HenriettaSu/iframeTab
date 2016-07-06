@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>首頁</title>
+  <!-- Custom styling plus plugins -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../vendor/bootstrap/fonts/css/font-awesome.css" rel="stylesheet">
+  <link href="../vendor/gentelella/custom.css" rel="stylesheet">
+  <link href="../dist/css/iframeTab.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container iframe-container body">
+    <div class="right_col">
+	  <div class="row">
+        <div class="x_panel">
+		  <div class="x_content">
+            <p>
+              首先很抱歉，因為這個網站用的免費域名和主機，廣告有點憂傷，叉掉之後就不會出現了。 <br />
+              請在服務器上運行本插件，否則會出現下列問題：
+            </p>
+            <ul class="change-log">
+              <li>iframe高度出錯</li>
+              <li>本鏈接（<a href="iframeTab-test.html" data-num="0" data-name="測試頁" data-mul="ja">這是一個多開鏈接</a>）將不能成功創建，而會直接在這個頁面上跳轉</li>
+            </ul>
+            <p>目錄中附有服務器工具，使用方法可查看文檔。</p>
+          </div>
+		</div>
+	  </div>
+    </div>
+  </div>
+  
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../vendor/gentelella/custom.js"></script>
+  <script src="../dist/js/iframeTab.min.js"></script>
+  <script>
+    var iframeTabOption = {}
+    iframeTab.init(iframeTabOption);
+  </script>
+</body>
