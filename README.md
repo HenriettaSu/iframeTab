@@ -29,13 +29,13 @@ iframeTab.init({
 
 #### 超鏈接
 
-這是最簡單的超鏈接，'data-num=0' 是必須包含的，否則會作為一般鏈接在瀏覽器窗口打開：
+這是最簡單的超鏈接，`data-num=0` 是必須包含的，否則會作為一般鏈接在瀏覽器窗口打開：
 
 ```html
 <a href="iframeTab-demo.html" data-num="0">主頁</a>
 ```
 
-標籤欄上每個頁面的名字默認是超鏈接上的文字，如果你希望有所不同的話，你可以使用 'data-name'，例如：
+標籤欄上每個頁面的名字默認是超鏈接上的文字，如果你希望有所不同的話，你可以使用 `data-name`，例如：
 
 ```html
 <a href="iframeTab-demo.html" data-num="0" data-name="我才不是主頁">主頁</a>
@@ -52,50 +52,50 @@ iframeTab.init({
 </ul>
 ```
 
-HTML標籤可以隨意更換，只要確保 'tabLi' 確實包含在 'tabUl' 之下，'.tab-close' 於 'tabLi' 下，之間添加別的元素也是沒有關係的。
+HTML標籤可以隨意更換，只要確保 `tabLi` 確實包含在 `tabUl` 之下，`.tab-close` 於 `tabLi` 下，之間添加別的元素也是沒有關係的。
 
 #### iframe結構
 
 同上iframe結構只要層級正確，之間添加什麼都可以。
 
 ```html
-<div>
-  <div>
-    <iframe src="iframeTab-demo.html" data-iframe="iframeTab-demo" data-num="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onload="iframeTab.iFrameHeight()"></iframe>
-  </div>
-</div>
+&lt;div&gt;
+  &lt;div&gt;
+    &lt;iframe src=&quot;iframeTab-demo.html&quot; data-iframe=&quot;iframeTab-demo&quot; data-num=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; onload=&quot;iframeTab.iFrameHeight()&quot;&gt;&lt;/iframe&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
 ```
 
-第二個div為 'tabPan'，用來存放 '<iframe>'，第一個為 'tabBody'，以存放 'tabPan'。
+第二個div為 `tabPan`，用來存放 `&lt;iframe&gt;`，第一個為 `tabBody`，以存放 `tabPan`。
 
 
 ## gulp
 
-因為本插件涉及iframe操作，在本地直接打開將報錯，你需要在服務器上調試，本插件提供 'gulp' 調試方式，你可以以此進行插件模擬和代碼編譯。
+因為本插件涉及iframe操作，在本地直接打開將報錯，你需要在服務器上調試，本插件提供 `gulp` 調試方式，你可以以此進行插件模擬和代碼編譯。
 
 可用的 'gulp' 命令如下：
 
-* 'gulp' 運行服務器并編譯所有代碼
-* 'gulp browser-sync' 運行服務器
-* 'gulp watch' 進入watch模式
-* 'gulp sass-to-css' 將sass編譯成css
-* 'gulp minify-css' 壓縮css
-* 'gulp jscompress' 壓縮js
+* `gulp` 運行服務器并編譯所有代碼
+* `gulp browser-sync` 運行服務器
+* `gulp watch` 進入watch模式
+* `gulp sass-to-css` 將sass編譯成css
+* `gulp minify-css` 壓縮css
+* `gulp jscompress` 壓縮js
 
 
 ## 分支說明
 
-* 'build' 開發分支
-* 'dist' 包含全部編譯後代碼的分支
-* 'example' 示例頁面分支
-* 'vendor' 其他插件分支
+* `build` 開發分支
+* `dist` 包含全部編譯後代碼的分支
+* `example` 示例頁面分支
+* `vendor` 其他插件分支
 
 
 ## 聯繫與討論
 
 QQ：3088680950
 
-如果發現八阿哥了或者有功能上的建議，推薦通過 'issue' 發起討論。
+如果發現八阿哥了或者有功能上的建議，推薦通過 `issue` 發起討論。
 
 
 ## License
