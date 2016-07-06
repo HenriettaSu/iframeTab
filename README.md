@@ -7,6 +7,13 @@ iframeTab是一個利用jQuery JavaScript模擬瀏覽器多窗口+標籤開啟�
 
 ## 使用
 
+### DEMO
+
+示例(demodakedo.soragoto.net/adminTemplate/index.html)
+
+
+## 使用
+
 ### JS
 
 使用本默認框架的話這樣就可以了：
@@ -66,14 +73,14 @@ HTML標籤可以隨意更換，只要確保 `tabLi` 確實包含在 `tabUl` 之�
 </div>
 ```
 
-第二個div為 `tabPan`，用來存放 `&lt;iframe&gt;`，第一個為 `tabBody`，以存放 `tabPan`。
+第二個div為 `tabPan`，用來存放 `<iframe>`，第一個為 `tabBody`，以存放 `tabPan`。
 
 
 ## gulp
 
 因為本插件涉及iframe操作，在本地直接打開將報錯，你需要在服務器上調試，本插件提供 `gulp` 調試方式，你可以以此進行插件模擬和代碼編譯。
 
-可用的 'gulp' 命令如下：
+可用的 `gulp` 命令如下：
 
 * `gulp` 運行服務器并編譯所有代碼
 * `gulp browser-sync` 運行服務器
