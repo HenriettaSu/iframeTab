@@ -108,7 +108,7 @@
                 <code>
                   &lt;div&gt; <br />
                   &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt; <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;iframe src=&quot;iframeTab-demo.html&quot; data-iframe=&quot;iframeTab-demo&quot; data-num=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; onload=&quot;iframeTab.iFrameHeight()&quot;&gt;&lt;/iframe&gt;<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;iframe src=&quot;iframeTab-demo.html&quot; data-iframe=&quot;iframeTab-demo&quot; data-num=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; onload=&quot;iframeTab.iframeHeight()&quot;&gt;&lt;/iframe&gt;<br />
                   &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt; <br />
                   &lt;/div&gt; <br />
                 </code>
@@ -186,13 +186,16 @@
             </div>
 			<div class="x_content">
               <p>
-                <code>
-                  iframeTab.iFrameHeight()
-                </code>
+                <code>iframeTab.iframeHeight()</code>
                 <br />
                 <br />
                 刷新iframe窗口高度。
                 在某些場合上如通過JS對頁面進行動態修改，頁面高度改變會出現窗口過長或過短，此時可通過此方法刷新頁面高度。
+                <br />
+                若在子窗口調用，需加上 <code>parent</code>。
+                <br />
+                <br />
+                <code>parent.iframeTab.iframeHeight()</code>
               </p>
             </div>
 		  </div>

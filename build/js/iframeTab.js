@@ -13,7 +13,7 @@
 
 (function () {
     iframeTab = jQuery.prototype = {
-        iFrameHeight: function() {
+        iframeHeight: function() {
             var ifm = $(".tab-panel.active iframe")[0];
             var subWeb = $(document).frames ? $(document).frames["iframepage"].document : ifm.contentDocument;
             if(ifm != null && subWeb != null) {
@@ -52,7 +52,7 @@
                     $tabBody = $(tabBody, p),
                     $tabPan = $(tabPan, p),
                     tab = $tabUl.find('[data-name="' + name + '"]').data('tab'),
-                    iframe = $('<iframe src="' + link + '" data-iframe="' + link + '" data-num="' + tnum + '" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onload="iframeTab.iFrameHeight()"></iframe>');
+                    iframe = $('<iframe src="' + link + '" data-iframe="' + link + '" data-num="' + tnum + '" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onload="iframeTab.iframeHeight()"></iframe>');
                 $this.on('click', function (e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -115,7 +115,7 @@
                     source = $this.data('source'),
                     $tabBody = $(tabBody, p);
                 $tabBody.find('iframe[data-iframe="' + source + '"]').attr('src', source);
-                iframeTab.iFrameHeight();
+                iframeTab.iframeHeight();
             });
         }
     }

@@ -1,6 +1,6 @@
 # iframeTab plug-in for jQuery
 
-iframeTab是一個利用jQuery JavaScript模擬瀏覽器多窗口+標籤開啟頁面的插件。盡量與HTML分離，插件配有默認樣式，但也提供參數讓你可以自己配置tab的樣式、模塊分佈，每個模塊的關係結構不超過三層。
+jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件。不依賴任何樣式，可自由配置tab的樣式、模塊分佈，你只需要遵循一點簡單的DOM元素結構關係。
 
 將來，也將提供API讓你更方便更自由地拓展本插件，讓你輕易地使用本插件到你的頁面上。
 
@@ -68,12 +68,13 @@ HTML標籤可以隨意更換，只要確保 `tabLi` 確實包含在 `tabUl` 之�
 ```html
 <div>
   <div>
-    <iframe src="iframeTab-demo.html" data-iframe="iframeTab-demo" data-num="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onload="iframeTab.iFrameHeight()"></iframe>
+    <iframe src="iframeTab-demo.html" data-iframe="iframeTab-demo" data-num="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onload="iframeTab.iframeHeight()"></iframe>
   </div>
 </div>
 ```
 
 第二個div為 `tabPan`，用來存放 `<iframe>`，第一個為 `tabBody`，以存放 `tabPan`。
+另外，`<iframe>` 的寫法是固定的。
 
 
 ## gulp
