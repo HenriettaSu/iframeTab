@@ -1,3 +1,16 @@
+/*
+ * iframeTab
+ * Version: 1.0.0
+ *
+ * Plugin that can simulate browser to open links as tab and iframe in a page
+ *
+ * https://github.com/HenriettaSu/iframeTab
+ *
+ * License: MIT
+ *
+ * Released on: July 7, 2016
+*/
+
 (function () {
     iframeTab = jQuery.prototype = {
         iFrameHeight: function() {
