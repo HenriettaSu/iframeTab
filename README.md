@@ -9,7 +9,7 @@ iframeTab是一個利用jQuery JavaScript模擬瀏覽器多窗口+標籤開啟�
 
 ### DEMO
 
-[示例](demodakedo.soragoto.net/adminTemplate/index.html)
+[示例](http://demodakedo.soragoto.net/adminTemplate/index.html)
 
 
 ## 使用
