@@ -9,7 +9,7 @@ jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件�
 
 ### DEMO
 
-[示例](http://demodakedo.soragoto.net/adminTemplate/index.html)
+[示例](http://henrie.pursuitus.com/adminTemplate/index.html)
 
 
 ## 使用

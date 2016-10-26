@@ -13,10 +13,12 @@
 
 (function () {
     iframeTab = jQuery.prototype = {
-        iframeHeight: function() {
-            var ifm = $(".tab-panel.active iframe")[0];
-            var subWeb = $(document).frames ? $(document).frames["iframepage"].document : ifm.contentDocument;
-            if(ifm != null && subWeb != null) {
+        iframeHeight: function(updateHeight) {
+            var ifm = $(".tab-panel.active iframe")[0],
+                subWeb = $(document).frames ? $(document).frames["iframepage"].document : ifm.contentDocument;
+            if (updateHeight) {
+                ifm.height = updateHeight;
+            } else if (ifm != null && subWeb != null) {
                 ifm.height = subWeb.body.scrollHeight;
             }
         },

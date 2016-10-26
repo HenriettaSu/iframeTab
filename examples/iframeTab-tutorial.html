@@ -186,17 +186,25 @@
             </div>
 			<div class="x_content">
               <p>
-                <code>iframeTab.iframeHeight()</code>
+                <code>iframeTab.iframeHeight(updateHeight)</code>
                 <br />
                 <br />
-                刷新iframe窗口高度。
-                在某些場合上如通過JS對頁面進行動態修改，頁面高度改變會出現窗口過長或過短，此時可通過此方法刷新頁面高度。
+                刷新iframe窗口高度。在某些場合上如通過JS對頁面進行動態修改，頁面高度改變會出現窗口高度過短，此時可通過此方法刷新頁面高度。<br />
                 <br />
                 若在子窗口調用，需加上 <code>parent</code>。
                 <br />
                 <br />
-                <code>parent.iframeTab.iframeHeight()</code>
+                <code>parent.iframeTab.iframeHeight(updateHeight)</code>
               </p>
+              <ul class="change-log">
+                <li>
+                  <code>updateHeight</code> | number<br />
+                  <p>
+                  某些情況，頁面包含脫離文檔流的元素且超出document高度，此時應獲取該元素高度并作為參數傳入。<br />
+                  忽略此參數，表示取iframe的document高度。
+                  </p>
+                </li>
+              </ul>
             </div>
 		  </div>
           <div class="x_panel">
