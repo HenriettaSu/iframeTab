@@ -72,7 +72,7 @@ table.no-border-t tr:first-child td {
   overflow: hidden;
   white-space: nowrap;
   -o-text-overflow: ellipsis;
-  text-overflow: ellipsis; }
+     text-overflow: ellipsis; }
 
 footer {
   text-align: center;

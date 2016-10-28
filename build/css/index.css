@@ -20,44 +20,5 @@
 .nav_menu {
   margin-bottom: 0 !important; }
 
-.tabs-header {
-  margin-left: 230px; }
-  .tabs-header ul {
-    margin-bottom: 0; }
-    .tabs-header ul:after {
-      content: "";
-      clear: both;
-      display: block; }
-    .tabs-header ul li {
-      float: left;
-      list-style: none;
-      padding: 6px 12px;
-      background-color: #1D2C3A;
-      color: #c7c7c7;
-      border-left: 1px solid #304961;
-      cursor: pointer; }
-      .tabs-header ul li i {
-        margin-left: 5px; }
-      .tabs-header ul li.active {
-        background-color: #f7f7f7;
-        color: #73879c; }
-
-.tabs-body .tab-panel {
-  display: none; }
-  .tabs-body .tab-panel.active {
-    display: block; }
-  .tabs-body .tab-panel iframe {
-    width: 100%;
-    border: none; }
-
-.tab-footer {
-  margin-left: 230px; }
-
 body.nav-sm .tabs-header, body.nav-sm .tab-footer {
   margin-left: 70px; }
-
-@media (max-width: 991px) {
-  .tabs-header {
-    margin-left: 0; }
-  .tab-footer {
-    margin: 0; } }
