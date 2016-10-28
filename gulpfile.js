@@ -30,13 +30,13 @@ gulp.task('sass-to-css', function(){
         browsers: ['last 99 versions']
       }))
       .pipe(gulp.dest(buildCssSrc))
-      .pipe(concat('iframeTab.css'))
+      .pipe(concat('style.css'))
       .pipe(gulp.dest(buildCssSrc));
 });
 
 // css minify
 gulp.task('minify-css', function() {
-  return gulp.src(buildCss)
+  return gulp.src([buildCssSrc + '/style.css', buildCssSrc + '/iframeTab.css'])
       .pipe(changed(buildCss))
       .pipe(cleanCSS({ compatibility: 'ie8' }))
       .pipe(rename({ suffix: '.min' }))
