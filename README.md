@@ -53,8 +53,6 @@ iframeTab.init({
 
 #### 標籤欄結構
 
-雖然允許你自己定義標籤欄的模塊，但還是有一個基本的結構。
-
 ```html
 <ul>
     <li class="active tab-keep" data-tab="my-desktop.html" data-num="0">首頁</li>
@@ -62,9 +60,9 @@ iframeTab.init({
 </ul>
 ```
 
-'<li>' 中的 'data-tab' 應與對應的iframe頁 '<iframe>' 中的 'src' 和 'data-iframe' 保持一致，內容應為iframe的 'src' 屬性。同時也必須包含 'data-num="0"' 。
-'li.active' 表示當前標籤已激活，'li.tab-keep' 表示右鍵刪除所有標籤時將保留當前標籤。
-若需添加 'data-btn="close"' 為刪除標籤按鈕。
+`<li>` 中的 `data-tab` 應與對應的iframe頁 `<iframe>` 中的 `src` 和 `data-iframe` 保持一致，內容應為iframe的 `src` 屬性。同時也必須包含 `data-num="0"` 。
+`li.active` 表示當前標籤已激活，`li.tab-keep` 表示右鍵刪除所有標籤時將保留當前標籤。
+若需添加 `data-btn="close"` 為刪除標籤按鈕。
 
 #### iframe結構
 
@@ -79,9 +77,9 @@ iframeTab.init({
 </div>
 ```
 
-'<iframe>' 中的 'src' 和 'data-iframe' 應與對應的標籤 '<li>' 中的 'data-tab' 保持一致，內容應為iframe的 'src' 屬性。同時也必須包含 'data-num="0"' 。
-'.tab-panel.active' 表示當前iframe已激活，'.tab-panel.tab-keep' 表示右鍵刪除所有標籤時將保留當前iframe頁。
-<div class="right_col" role="main"> 為 'div.tab-panel' 和 '<iframe>' 間的容器，並非必要，若需自行配置或不需要該容器，可在option中配置 'iframeBox' 參數。
+`<iframe>` 中的 `src` 和 `data-iframe` 應與對應的標籤 `<li>` 中的 `data-tab` 保持一致，內容應為iframe的 `src` 屬性。同時也必須包含 `data-num="0"` 。
+`.tab-panel.active` 表示當前iframe已激活，`.tab-panel.tab-keep` 表示右鍵刪除所有標籤時將保留當前iframe頁。
+<div class="right_col" role="main"> 為 `div.tab-panel` 和 `<iframe>` 間的容器，並非必要，若需自行配置或不需要該容器，可在option中配置 `iframeBox` 參數。
 
 
 ## gulp
