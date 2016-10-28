@@ -95,7 +95,7 @@
                 </code>
                 <br />
                 <br />
-                <code>&lt;li&gt;</code> 中的 <code>data-tab</code> 應與對應的iFrame頁 <code>&lt;iframe&gt;</code> 中的 <code>src</code> 和 <code>data-iframe</code> 保持一致，內容應為iFrame的 <code>src</code> 屬性。同時也必須包含 <code>data-num=&quot;0&quot;</code> 。<br />
+                <code>&lt;li&gt;</code> 中的 <code>data-tab</code> 應與對應的iframe頁 <code>&lt;iframe&gt;</code> 中的 <code>src</code> 和 <code>data-iframe</code> 保持一致，內容應為iframe的 <code>src</code> 屬性。同時也必須包含 <code>data-num=&quot;0&quot;</code> 。<br />
                 <code>li.active</code> 表示當前標籤已激活，<code>li.tab-keep</code> 表示右鍵刪除所有標籤時將保留當前標籤。<br />
                 若需添加
                 <code>data-btn=&quot;close&quot;</code> 為刪除標籤按鈕。
@@ -104,15 +104,13 @@
 		  </div>
           <div class="x_panel">
 			<div class="x_title clearfix">
-			  <h2>iFrame結構</h2>
+			  <h2>iframe結構</h2>
 		      <ul class="nav navbar-right panel_toolbox">
 				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
               </ul>
             </div>
 			<div class="x_content">
               <p>
-                同上iframe結構只要層級正確，之間添加什麼都可以。 <br />
-                <br />
                 <code>
                   &lt;div class=&quot;tabs-body&quot;&gt; <br />
                   &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;tab-panel tab-keep active&quot;&gt;<br />
@@ -125,9 +123,9 @@
                 </code>
                 <br />
                 <br />
-                <code>&lt;iframe&gt;</code> 中的 <code>src</code> 和 <code>data-iframe</code> 應與對應的標籤 <code>&lt;li&gt;</code> 中的 <code>data-tab</code> 保持一致，內容應為iFrame的 <code>src</code> 屬性。同時也必須包含 <code>data-num=&quot;0&quot;</code> 。<br />
-                <code>.tab-panel.active</code> 表示當前iFrame已激活，<code>.tab-panel.tab-keep</code> 表示右鍵刪除所有標籤時將保留當前iFrame頁。<br />
-                <code>&lt;div class=&quot;right_col&quot; role=&quot;main&quot;&gt;</code> 為 <code>div.tab-panel</code> 和 <code>iframe</code> 間的容器，並非必要，若需自行配置或不需要該容器，可在option中配置 <code>iframeBox</code> 參數。
+                <code>&lt;iframe&gt;</code> 中的 <code>src</code> 和 <code>data-iframe</code> 應與對應的標籤 <code>&lt;li&gt;</code> 中的 <code>data-tab</code> 保持一致，內容應為iframe的 <code>src</code> 屬性。同時也必須包含 <code>data-num=&quot;0&quot;</code> 。<br />
+                <code>.tab-panel.active</code> 表示當前iframe已激活，<code>.tab-panel.tab-keep</code> 表示右鍵刪除所有標籤時將保留當前iframe頁。<br />
+                <code>&lt;div class=&quot;right_col&quot; role=&quot;main&quot;&gt;</code> 為 <code>div.tab-panel</code> 和 <code>&lt;iframe&gt;</code> 間的容器，並非必要，若需自行配置或不需要該容器，可在option中配置 <code>iframeBox</code> 參數。
               </p>
             </div>
 		  </div>
@@ -146,7 +144,7 @@
                 <br />
                 <code>
                   var iframeTabOption = { <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;closesBtnClass: '.tabs-header ul', <br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;closesBtnClass: 'fa fa-close', <br />
                   &nbsp;&nbsp;&nbsp;&nbsp;callback: {<br />
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onChange: function () {<br />
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(&#x27;標籤切換了&#x27;)<br />
