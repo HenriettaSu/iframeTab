@@ -1,22 +1,21 @@
 # iframeTab plug-in for jQuery
 
-jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件。不依賴任何樣式，可自由配置tab的樣式、模塊分佈，你只需要遵循一點簡單的DOM元素結構關係。
-
-將來，也將提供API讓你更方便更自由地拓展本插件，讓你輕易地使用本插件到你的頁面上。
+jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件，在標籤過多情況下將自動折疊成一行，還可右鍵關閉所有標籤。
+除了樣式可以自由配置，還提供事件回調函數，自由拓展使用。
 
 
 ## 使用
 
-### DEMO
+### DEMO演示 & API文檔
 
-[示例](http://henrie.pursuitus.com/adminTemplate/index.html)
+[示例](http://henrie.pursuitus.com/adminTemplate/)
 
 
 ## 使用
 
 ### JS
 
-使用本默認框架的話這樣就可以了：
+使用本默認框架的話這樣就可以初始化iframeTab了：
 
 ```js
 iframeTab.init();
@@ -25,9 +24,13 @@ iframeTab.init();
 但我想你們會有自己的配置：
 
 ```js
-iframeTab.init({
-    tabUl: '.tabs-header ul',
-    tabLi: '.tabs-header li',
+iframeTab.init({ 
+    closesBtnClass: 'fa fa-close', 
+    callback: {
+        onChange: function () {
+            alert('標籤切換了')
+        }
+    }
 });
 ```
 
@@ -54,27 +57,31 @@ iframeTab.init({
 
 ```html
 <ul>
-  <li data-tab="iframeTab-demo">標籤一 <i data-btn="close"></i></li>
-  <li data-tab="">標籤二 <i data-btn="close"></i></li>
+    <li class="active tab-keep" data-tab="my-desktop.html" data-num="0">首頁</li>
+    <li data-tab="tabPage.html">標籤頁 <i data-btn="close"></i></li>
 </ul>
 ```
 
-HTML標籤可以隨意更換，只要確保 `tabLi` 確實包含在 `tabUl` 之下，`.tab-close` 於 `tabLi` 下，之間添加別的元素也是沒有關係的。
+'<li>' 中的 'data-tab' 應與對應的iframe頁 '<iframe>' 中的 'src' 和 'data-iframe' 保持一致，內容應為iframe的 'src' 屬性。同時也必須包含 'data-num="0"' 。
+'li.active' 表示當前標籤已激活，'li.tab-keep' 表示右鍵刪除所有標籤時將保留當前標籤。
+若需添加 'data-btn="close"' 為刪除標籤按鈕。
 
 #### iframe結構
 
-同上iframe結構只要層級正確，之間添加什麼都可以。
-
 ```html
-<div>
-  <div>
-    <iframe src="iframeTab-demo.html" data-iframe="iframeTab-demo" data-num="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onload="iframeTab.iframeHeight()"></iframe>
-  </div>
+<div class="tabs-body"> 
+    <div class="tab-panel tab-keep active">
+        <!-- 包裹iFrame的外部元素，可按自己需求更改，如需設置，應同時在option中配置iframeBox -->
+        <div class="right_col" role="main">
+            <iframe src="my-desktop.html" data-iframe="my-desktop.html" data-num="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onload="iframeTab.iframeHeight()" height="188"></iframe>
+        </div>
+    </div> 
 </div>
 ```
 
-第二個div為 `tabPan`，用來存放 `<iframe>`，第一個為 `tabBody`，以存放 `tabPan`。
-另外，`<iframe>` 的寫法是固定的。
+'<iframe>' 中的 'src' 和 'data-iframe' 應與對應的標籤 '<li>' 中的 'data-tab' 保持一致，內容應為iframe的 'src' 屬性。同時也必須包含 'data-num="0"' 。
+'.tab-panel.active' 表示當前iframe已激活，'.tab-panel.tab-keep' 表示右鍵刪除所有標籤時將保留當前iframe頁。
+<div class="right_col" role="main"> 為 'div.tab-panel' 和 '<iframe>' 間的容器，並非必要，若需自行配置或不需要該容器，可在option中配置 'iframeBox' 參數。
 
 
 ## gulp
