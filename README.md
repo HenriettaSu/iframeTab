@@ -1,6 +1,7 @@
 # iframeTab plug-in for jQuery
 
 jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件，在標籤過多情況下將自動折疊成一行，還可右鍵關閉所有標籤。
+
 除了樣式可以自由配置，還提供事件回調函數，自由拓展使用。
 
 
@@ -61,6 +62,7 @@ iframeTab.init({
 ```
 
 `<li>` 中的 `data-tab` 應與對應的iframe頁 `<iframe>` 中的 `src` 和 `data-iframe` 保持一致，內容應為iframe的 `src` 屬性。同時也必須包含 `data-num="0"` 。
+
 `li.active` 表示當前標籤已激活，`li.tab-keep` 表示右鍵刪除所有標籤時將保留當前標籤。
 若需添加 `data-btn="close"` 為刪除標籤按鈕。
 
@@ -78,8 +80,13 @@ iframeTab.init({
 ```
 
 `<iframe>` 中的 `src` 和 `data-iframe` 應與對應的標籤 `<li>` 中的 `data-tab` 保持一致，內容應為iframe的 `src` 屬性。同時也必須包含 `data-num="0"` 。
+
 `.tab-panel.active` 表示當前iframe已激活，`.tab-panel.tab-keep` 表示右鍵刪除所有標籤時將保留當前iframe頁。
-<div class="right_col" role="main"> 為 `div.tab-panel` 和 `<iframe>` 間的容器，並非必要，若需自行配置或不需要該容器，可在option中配置 `iframeBox` 參數。
+
+```html
+<div class="right_col" role="main">
+```
+為 `div.tab-panel` 和 `<iframe>` 間的容器，並非必要，若需自行配置或不需要該容器，可在option中配置 `iframeBox` 參數。
 
 
 ## gulp
