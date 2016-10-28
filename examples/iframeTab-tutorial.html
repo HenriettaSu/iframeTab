@@ -11,7 +11,7 @@
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="../vendor/bootstrap/fonts/css/font-awesome.css" rel="stylesheet">
   <link href="../vendor/gentelella/custom.css" rel="stylesheet">
-  <link href="../dist/css/iframeTab.min.css" rel="stylesheet">
+  <link href="../dist/css/style.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -20,7 +20,7 @@
         <div class="clearfix">
           <div class="page-title">
             <div class="title_left">
-              <h3>iframeTab 文檔</h3>
+              <h3 id="test">iframeTab 文檔</h3>
             </div>
 			<div class="title_right">
 			  <div class="pull-right">
@@ -39,13 +39,17 @@
             </div>
 			<div class="x_content">
               <p>
-                基於本插件是以<a href="https://colorlib.com/polygon/gentelella/" target="_blank">Gentelella</a>為框架開發的，樣式對此框架有依賴性，但插件實際使用上對樣式沒有任何依賴性，因此不建議引用css文件。
+                本插件是以<a href="https://colorlib.com/polygon/gentelella/" target="_blank">Gentelella</a>為框架開發的，本demo對此框架有一定依賴性，但實際使用上并非必要。
               </p>
               <code>
                 &lt;!DOCTYPE html&gt; <br />
                 &lt;html&gt; <br />
                 &lt;header&gt; <br />
                 &nbsp;&nbsp;&nbsp;&nbsp;&lt;meta charset=&quot;utf-8&quot;&gt; <br />
+                 <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- 引入 iframeTab 樣式文件，非必要，可自行定制 --&gt; <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;link href=&quot;iframeTab.min.css&quot; rel=&quot;stylesheet&quot;&gt; <br />
+                 <br />
                 &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- &#24341;&#20837; jQuery &#21644; iframeTab &#25991;&#20214; --&gt; <br />
                 &nbsp;&nbsp;&nbsp;&nbsp;&lt;script src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt; <br />
                 &nbsp;&nbsp;&nbsp;&nbsp;&lt;script src=&quot;iframeTab.min.js&quot;&gt;&lt;/script&gt; <br />
@@ -84,19 +88,23 @@
 			<div class="x_content">
               <p>
                 <code>
-                  &lt;ul&gt; <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;li data-tab=&quot;iframeTab-demo&quot;&gt;&#27161;&#31844;&#19968; &lt;i data-btn=&quot;close&quot;&gt;&lt;/i&gt;&lt;/li&gt; <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;li data-tab=&quot;&quot;&gt;&#27161;&#31844;&#20108; &lt;i data-btn=&quot;close&quot;&gt;&lt;/i&gt;&lt;/li&gt; <br />
-                  &lt;/ul&gt; <br />
+                  &lt;ul&gt;<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;li class=&quot;active tab-keep&quot; data-tab=&quot;my-desktop.html&quot; data-num=&quot;0&quot;&gt;首頁&lt;/li&gt;<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;li data-tab=&quot;tabPage.html&quot;&gt;標籤頁 &lt;i data-btn=&quot;close&quot;&gt;&lt;/i&gt;&lt;/li&gt;<br />
+                  &lt;/ul&gt;
                 </code>
                 <br />
-                HTML標籤可以隨意更換，只要確保 'tabLi' 確實包含在 <code>tabUl</code> 之下，包含 <code>data-btn=&quot;close&quot;</code> 的元素於 <code>tabLi</code> 下，之間添加別的元素也是沒有關係的。
+                <br />
+                <code>&lt;li&gt;</code> 中的 <code>data-tab</code> 應與對應的iFrame頁 <code>&lt;iframe&gt;</code> 中的 <code>src</code> 和 <code>data-iframe</code> 保持一致，內容應為iFrame的 <code>src</code> 屬性。同時也必須包含 <code>data-num=&quot;0&quot;</code> 。<br />
+                <code>li.active</code> 表示當前標籤已激活，<code>li.tab-keep</code> 表示右鍵刪除所有標籤時將保留當前標籤。<br />
+                若需添加
+                <code>data-btn=&quot;close&quot;</code> 為刪除標籤按鈕。
               </p>
             </div>
 		  </div>
           <div class="x_panel">
 			<div class="x_title clearfix">
-			  <h2>標籤欄結構</h2>
+			  <h2>iFrame結構</h2>
 		      <ul class="nav navbar-right panel_toolbox">
 				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
               </ul>
@@ -106,14 +114,20 @@
                 同上iframe結構只要層級正確，之間添加什麼都可以。 <br />
                 <br />
                 <code>
-                  &lt;div&gt; <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt; <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;iframe src=&quot;iframeTab-demo.html&quot; data-iframe=&quot;iframeTab-demo&quot; data-num=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; onload=&quot;iframeTab.iframeHeight()&quot;&gt;&lt;/iframe&gt;<br />
+                  &lt;div class=&quot;tabs-body&quot;&gt; <br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;tab-panel tab-keep active&quot;&gt;<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- 包裹iFrame的外部元素，可按自己需求更改，如需設置，應同時在option中配置iframeBox --&gt;<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;right_col&quot; role=&quot;main&quot;&gt;<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;iframe src=&quot;my-desktop.html&quot; data-iframe=&quot;my-desktop.html&quot; data-num=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; onload=&quot;iframeTab.iframeHeight()&quot; height=&quot;188&quot;&gt;&lt;/iframe&gt;<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br />
                   &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt; <br />
-                  &lt;/div&gt; <br />
+                  &lt;/div&gt; 
                 </code>
                 <br />
-                第二個div為 <code>tabPan</code>，用來存放 <code>&lt;iframe&gt;</code>，第一個為 <code>tabBody</code>，以存放 <code>tabPan</code>。
+                <br />
+                <code>&lt;iframe&gt;</code> 中的 <code>src</code> 和 <code>data-iframe</code> 應與對應的標籤 <code>&lt;li&gt;</code> 中的 <code>data-tab</code> 保持一致，內容應為iFrame的 <code>src</code> 屬性。同時也必須包含 <code>data-num=&quot;0&quot;</code> 。<br />
+                <code>.tab-panel.active</code> 表示當前iFrame已激活，<code>.tab-panel.tab-keep</code> 表示右鍵刪除所有標籤時將保留當前iFrame頁。<br />
+                <code>&lt;div class=&quot;right_col&quot; role=&quot;main&quot;&gt;</code> 為 <code>div.tab-panel</code> 和 <code>iframe</code> 間的容器，並非必要，若需自行配置或不需要該容器，可在option中配置 <code>iframeBox</code> 參數。
               </p>
             </div>
 		  </div>
@@ -128,12 +142,16 @@
               <p>
                 <code>iframeTab.init();</code><br />
                 <br />
-                通過 <code>iframeTab.init</code> 方法即可初始化iframeTab，但我相信你會想自行配置一下。 <br />
+                通過 <code>iframeTab.init</code> 方法即可初始化iframeTab，可根據需求修改配置數據。 <br />
                 <br />
                 <code>
                   var iframeTabOption = { <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;tabUl: '.tabs-header ul', <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;tabLi: '.tabs-header li', <br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;closesBtnClass: '.tabs-header ul', <br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;callback: {<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onChange: function () {<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(&#x27;標籤切換了&#x27;)<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;}<br />
                   } <br />
                   <br />
                   iframeTab.init(iframeTabOption);
@@ -151,28 +169,48 @@
 			<div class="x_content">
               <ul class="change-log">
                 <li>
-                  <code>tabUl</code> | String
-                  <p>標籤頁模塊，[ default: '.tabs-header ul' ]</p>
+                  <code>tabLiClass</code> | String
+                  <p>標籤欄標籤 &lt;li&gt; 樣式，[ default: &#x27;&#x27; ]</p>
                 </li>
                 <li>
-                  <code>tabLi</code> | String
-                  <p>標籤頁元素，[ default: '.tabs-header li' ]</p>
-                </li>
-                <li>
-                  <code>tabBody</code> | String
-                  <p>內容容器模塊，[ default: '.tabs-body' ]</p>
-                </li>
-                <li>
-                  <code>tabPan</code> | String
-                  <p>內容容器，[ default: '.tab-panel' ]</p>
+                  <code>tabPanClass</code> | String
+                  <p>標籤頁外層容器 <code>&lt;div class=&quot;tab-panel&quot;&gt;</code> 樣式，[ default: &#x27;&#x27; ]</p>
                 </li>
                 <li>
                   <code>closesBtnClass</code> | String
-                  <p>刪除按鈕樣式，[ default: 'fa fa-close' ]</p>
+                  <p>刪除按鈕 <code>[data-btn=&quot;close&quot;]</code> 樣式，[ default: 'fa fa-close' ]</p>
                 </li>
                 <li>
-                  <code>newTabPan</code> | String
-                  <p>包裹iframe的容器，若tabPan有修改，此處應跟隨修改，[ default: '&lt;div class=&quot;tab-panel active&quot;&gt;&lt;div class=&quot;right_col&quot; role=&quot;main&quot;&gt;&lt;/div&gt;&lt;/div&gt;' ]</p>
+                  <code>switchBtnDown</code> | String
+                  <p>折疊按鈕折疊狀態樣式，[ default: 'fa fa-chevron-down' ]</p>
+                </li>
+                <li>
+                  <code>switchBtnUp</code> | String
+                  <p>折疊按鈕展開狀態樣式，[ default: 'fa fa-chevron-up' ]</p>
+                </li>
+                <li>
+                  <code>contextmenuClass</code> | String
+                  <p>右鍵菜單 <code>div.tab-contextmenu</code> 樣式，[ default: 'dropdown open' ]</p>
+                </li>
+                <li>
+                  <code>iframeBox</code> | String
+                  <p><code>div.tab-panel</code> 和 <code>&lt;iframe&gt;</code> 間的容器，非必要，可配置為 <code>&#x27;&#x27;</code> ，若Html中有修改，此處應跟隨修改，[ default: '&lt;div class=&quot;right_col&quot; role=&quot;main&quot;&gt;&lt;/div&gt;' ]</p>
+                </li>
+                <li>
+                  <code>singleLineheight</code> | Number
+                  <p>標籤欄單行狀態高度，[ default: 92 ]</p>
+                </li>
+                <li>
+                  <code>menuWidth</code> | Number
+                  <p>某些UI框架下，如本demo，菜單欄位於右側，iFrame內容頁並非佔據整個視窗寬度，此情況下應配置菜單欄寬度，[ default: 230 ]</p>
+                </li>
+                <li>
+                  <code>callback.onCreat</code> | Function ()
+                  <p>用於標籤創建時的事件回調函數，[ default: null ]</p>
+                </li>
+                <li>
+                  <code>callback.onChange</code> | Function ()
+                  <p>用於標籤切換時的事件回調函數，[ default: null ]</p>
                 </li>
               </ul>
             </div>
@@ -205,6 +243,26 @@
                   </p>
                 </li>
               </ul>
+              <br />
+              <br />
+              <p>
+                <code>iframeTab.closeActIframe()</code><br />
+                <br />
+                執行此函數，將關閉當前iframe窗口。
+              <p>
+            </div>
+		  </div>
+          <div class="x_panel">
+			<div class="x_title clearfix">
+			  <h2>按鈕</h2>
+		      <ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              </ul>
+            </div>
+			<div class="x_content">
+              <p>
+                在元素上添加 <code>[data-btn="refresh"]</code>  ，則點擊該元素時，元素所在iFrame頁將被刷新。
+              </p>
             </div>
 		  </div>
           <div class="x_panel">
