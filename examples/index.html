@@ -160,6 +160,51 @@
   <script src="../vendor/gentelella/custom.js"></script>
   <script src="../build/js/iframeTab.js"></script>
   <script>
+    // 傳入以下creatOption，可觀察不同狀態的捕獲
+    var creatOption = {
+        callback: {
+            beforeCreat: function () {
+                $('.tab-panel.active iframe').hide();
+            },
+            onCreat: function () {
+                $('.tab-panel.active iframe').hide();
+            },
+            afterCreat: function () {
+                $('.tab-panel.active iframe').hide();
+            }
+        }
+    }
+    
+    // 傳入以下changeOption，可觀察不同狀態的捕獲
+    var changeOption = {
+        callback: {
+            beforeChange: function () {
+                $('.tab-panel.active iframe').hide();
+            },
+            onChange: function () {
+                $('.tab-panel.active iframe').hide();
+            },
+            afterChange: function () {
+                $('.tab-panel.active iframe').hide();
+            }
+        }
+    }
+    
+    // 傳入以下closeOption，可觀察不同狀態的捕獲
+    var closeOption = {
+        callback: {
+            beforeClose: function () {
+                alert('窗口即將關閉');
+            },
+            onClose: function () {
+                $('.tab-panel.active iframe').hide();
+            },
+            afterClose: function () {
+                $('.tab-panel.active iframe').hide();
+            }
+        }
+    }
+    
     iframeTab.init();
   </script>
 </body>

@@ -1,6 +1,6 @@
 /*
  * iframeTab
- * Version: 2.0.0
+ * Version: 2.1.0
  *
  * Plugin that can simulate browser to open links as tab and iframe in a page
  *
@@ -8,7 +8,7 @@
  *
  * License: MIT
  *
- * Released on: October 28, 2016
+ * Released on: November 7, 2016
  */
 
 (function () {
@@ -49,7 +49,7 @@
                 callback = options.callback;
 
             $.extend({
-                btnDel: function () {
+                btnDel: function (cb) {
                     $(document).on('click.tab.close', '.tabs-header li [data-btn="close"]', function (e) { // 刪除單個標籤
                         var $this = $(this),
                             $li = $this.parent(),
@@ -62,8 +62,9 @@
                             $next = $li.next(),
                             windowWidth = $(window).width(),
                             countWidth = 0;
+                        cb.beforeClose();
                         $li.remove();
-                        $tabBody.find('iframe[data-iframe="' + tab + '"][data-num="' + dnum + '"]').parent().parent().remove();
+                        $tabBody.find('iframe[data-iframe="' + tab + '"][data-num="' + dnum + '"]').parents('.tab-panel').remove();
                         $tabLi.each(function () {
                             var _this = $(this),
                                 liWidth = _this.width() > 0 ? _this.width() + 25 : _this.width();
@@ -75,6 +76,7 @@
                             $tabUl.toggleClass('hide-tab');
                             $tabUl.width('auto');
                         }
+                        cb.onClose();
                         if (typeof $prev.html() === 'undefined') {
                             $next.click();
                         } else {
@@ -82,9 +84,10 @@
                         }
                         e.preventDefault();
                         e.stopPropagation();
+                        cb.afterClose();
                     });
                 },
-                changeTab: function () {
+                changeTab: function (cb) {
                     $(document).on('click.tab.change', '.tabs-header li:not(.active)', function () { // 標籤欄切換
                         var $thisLi = $(this),
                             liLink = $thisLi.data('tab'),
@@ -94,13 +97,13 @@
                             $liTabBody = $('.tabs-body'),
                             $liTabPan = $('.tab-panel'),
                             $activeIframe = $liTabBody.find('iframe[data-iframe="' + liLink + '"][data-num="' + cnum + '"]');
+                        cb.beforeChange();
                         $liTabLi.removeClass('active');
-                        $liTabUl.find('li[data-tab="' + liLink + '"][data-num="' + cnum + '"]').addClass('active');
                         $liTabPan.removeClass('active');
+                        cb.onChange();
+                        $liTabUl.find('li[data-tab="' + liLink + '"][data-num="' + cnum + '"]').addClass('active');
                         $activeIframe.parents('.tab-panel').addClass('active');
-                        if (callback.onChange) {
-                            callback.onChange();
-                        }
+                        cb.afterChange();
                     });
                 }
             });
@@ -130,10 +133,11 @@
                     e.stopPropagation();
                 });
                 // 插入新標籤
-                function stellen() {
+                function stellen(cb) {
                     var tabUlWidth = $tabUl.width(),
                         $newTabLiLast,
                         $newTabLiFirst;
+                    cb.beforeCreat();
                     $tabLi.removeClass('active');
                     $tabUl.append('<li class="active ' + tabLiClass + '" data-tab="' + link + '" data-name="' + name + '" data-num="' + tnum + '">' + name + '<i class="' + closesBtnClass + '" data-btn="close"></i></li>');
                     if (!$('.tabs-header [data-btn="switch"]').length && $tabUl.height() > singleLineheight) {
@@ -158,17 +162,35 @@
                     $tabBody.append(iframe);
                     iframe.wrap('<div class="tab-panel active ' + tabPanClass + '"></div>');
                     iframe.wrap(iframeBox);
+                    cb.onCreat();
+                    $(iframe).load(function () {
+                        cb.afterCreat();
+                    });
                     tnum = tnum + 1;
-                    if (callback.onCreat) {
-                        callback.onCreat();
-                    }
                 }
                 if (event.which === 1) {
+                    var cb = {
+                        beforeCreat: function () {
+                            if (callback.beforeCreat) {
+                                callback.beforeCreat();
+                            }
+                        },
+                        onCreat: function () {
+                            if (callback.onCreat) {
+                                callback.onCreat();
+                            }
+                        },
+                        afterCreat: function () {
+                            if (callback.afterCreat) {
+                                callback.afterCreat();
+                            }
+                        }
+                    }
                     if ($('.tabs-header li[data-name="' + name + '"]', p).length > 0 && typeof mul === 'undefined') {
                         if (!$('.tabs-header li[data-tab="' + link + '"]', p).length > 0) {
                             $tabUl.find('li[data-name="' + name + '"]').remove();
                             $tabBody.find('iframe[data-iframe="' + tab + '"]').remove();
-                            stellen();
+                            stellen(cb);
                         } else {
                             $tabLi.removeClass('active');
                             $tabUl.find('li[data-tab="' + link + '"]').addClass('active');
@@ -179,13 +201,46 @@
                             }
                         }
                     } else {
-                        stellen();
+                        stellen(cb);
                     }
                 }
             });
             if ($('.tabs-header li', p).length === 1) {
-                $.changeTab();
-                $.btnDel();
+                var changeCb = {
+                    beforeChange: function () {
+                        if (callback.beforeChange) {
+                            callback.beforeChange();
+                        }
+                    },
+                    onChange: function () {
+                        if (callback.onChange) {
+                            callback.onChange();
+                        }
+                    },
+                    afterChange: function () {
+                        if (callback.afterChange) {
+                            callback.afterChange();
+                        }
+                    }
+                }, closeCb = {
+                    beforeClose: function () {
+                        if (callback.beforeClose) {
+                            callback.beforeClose();
+                        }
+                    },
+                    onClose: function () {
+                        if (callback.onClose) {
+                            callback.onClose();
+                        }
+                    },
+                    afterClose: function () {
+                        if (callback.afterClose) {
+                            callback.afterClose();
+                        }
+                    }
+                }
+                $.changeTab(changeCb);
+                $.btnDel(closeCb);
             }
             $('.tabs-header').on('mouseup', function (e) { // 右鍵菜單
                 var $this = $(this),

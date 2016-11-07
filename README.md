@@ -1,4 +1,4 @@
-# iframeTab plug-in for jQuery
+# iframeTab plug-in for jQuery 2.1.0
 
 jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件，在標籤過多情況下將自動折疊成一行，還可右鍵關閉所有標籤。
 
@@ -28,8 +28,14 @@ iframeTab.init();
 iframeTab.init({ 
     closesBtnClass: 'fa fa-close', 
     callback: {
+        beforeChange: function () {
+            $('.tab-panel.active iframe').hide();
+        },
         onChange: function () {
-            alert('標籤切換了')
+            $('.tab-panel.active iframe').hide();
+        },
+        afterChange: function () {
+            $('.tab-panel.active iframe').hide();
         }
     }
 });

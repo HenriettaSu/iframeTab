@@ -203,12 +203,40 @@
                   <p>某些UI框架下，如本demo，菜單欄位於右側，iFrame內容頁並非佔據整個視窗寬度，此情況下應配置菜單欄寬度，[ default: 230 ]</p>
                 </li>
                 <li>
+                  <code>callback.beforeCreat</code> | Function ()
+                  <p>用於捕獲窗口創建之前的事件回調函數，[ default: null ]</p>
+                </li>
+                <li>
+                  <code>callback.beforeChange</code> | Function ()
+                  <p>用於捕獲窗口切換之前的事件回調函數，[ default: null ]</p>
+                </li>
+                <li>
+                  <code>callback.beforeClose</code> | Function ()
+                  <p>用於捕獲窗口關閉之前的事件回調函數，[ default: null ]</p>
+                </li>
+                <li>
                   <code>callback.onCreat</code> | Function ()
-                  <p>用於標籤創建時的事件回調函數，[ default: null ]</p>
+                  <p>用於捕獲窗口創建時的事件回調函數，[ default: null ]</p>
                 </li>
                 <li>
                   <code>callback.onChange</code> | Function ()
-                  <p>用於標籤切換時的事件回調函數，[ default: null ]</p>
+                  <p>用於捕獲窗口切換時的事件回調函數，[ default: null ]</p>
+                </li>
+                <li>
+                  <code>callback.onClose</code> | Function ()
+                  <p>用於捕獲窗口關閉時的事件回調函數，[ default: null ]</p>
+                </li>
+                <li>
+                  <code>callback.afterCreat</code> | Function ()
+                  <p>用於捕獲窗口創建之後的事件回調函數，[ default: null ]</p>
+                </li>
+                <li>
+                  <code>callback.afterChange</code> | Function ()
+                  <p>用於捕獲窗口切換之後的事件回調函數，[ default: null ]</p>
+                </li>
+                <li>
+                  <code>callback.afterClose</code> | Function ()
+                  <p>用於捕獲窗口關閉之後的事件回調函數，[ default: null ]</p>
                 </li>
               </ul>
             </div>
