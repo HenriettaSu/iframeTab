@@ -242,7 +242,7 @@
                 $.changeTab(changeCb);
                 $.btnDel(closeCb);
             }
-            $('.tabs-header').on('mouseup', function (e) { // 右鍵菜單
+            $('.tabs-header').on('mousedown', function (e) { // 右鍵菜單
                 var $this = $(this),
                     x = e.clientX,
                     y = e.clientY,
