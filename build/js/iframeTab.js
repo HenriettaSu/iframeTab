@@ -1,6 +1,6 @@
 /*
  * iframeTab
- * Version: 2.1.0
+ * Version: 2.1.2
  *
  * Plugin that can simulate browser to open links as tab and iframe in a page
  *
@@ -8,7 +8,7 @@
  *
  * License: MIT
  *
- * Released on: November 7, 2016
+ * Released on: November 9, 2016
  */
 
 (function () {
@@ -61,8 +61,13 @@
                             $prev = $li.prev(),
                             $next = $li.next(),
                             windowWidth = $(window).width(),
-                            countWidth = 0;
-                        cb.beforeClose();
+                            countWidth = 0,
+                            beforeCloseBoolean;
+                        beforeCloseBoolean = cb.beforeClose();
+                        if (beforeCloseBoolean === false) {
+                            return false
+                        }
+                        console.log(iframeTab);
                         $li.remove();
                         $tabBody.find('iframe[data-iframe="' + tab + '"][data-num="' + dnum + '"]').parents('.tab-panel').remove();
                         $tabLi.each(function () {
@@ -96,8 +101,12 @@
                             $liTabLi = $('.tabs-header li'),
                             $liTabBody = $('.tabs-body'),
                             $liTabPan = $('.tab-panel'),
-                            $activeIframe = $liTabBody.find('iframe[data-iframe="' + liLink + '"][data-num="' + cnum + '"]');
-                        cb.beforeChange();
+                            $activeIframe = $liTabBody.find('iframe[data-iframe="' + liLink + '"][data-num="' + cnum + '"]'),
+                            beforeChangeBoolean;
+                        beforeChangeBoolean = cb.beforeChange();
+                        if (beforeChangeBoolean === false) {
+                            return false
+                        }
                         $liTabLi.removeClass('active');
                         $liTabPan.removeClass('active');
                         cb.onChange();
@@ -136,8 +145,12 @@
                 function stellen(cb) {
                     var tabUlWidth = $tabUl.width(),
                         $newTabLiLast,
-                        $newTabLiFirst;
-                    cb.beforeCreat();
+                        $newTabLiFirst,
+                        beforeCreatBoolean;
+                    beforeCreatBoolean = cb.beforeCreat();
+                    if (beforeCreatBoolean === false) {
+                        return false
+                    }
                     $tabLi.removeClass('active');
                     $tabUl.append('<li class="active ' + tabLiClass + '" data-tab="' + link + '" data-name="' + name + '" data-num="' + tnum + '">' + name + '<i class="' + closesBtnClass + '" data-btn="close"></i></li>');
                     if (!$('.tabs-header [data-btn="switch"]').length && $tabUl.height() > singleLineheight) {
@@ -172,7 +185,7 @@
                     var cb = {
                         beforeCreat: function () {
                             if (callback.beforeCreat) {
-                                callback.beforeCreat();
+                                return callback.beforeCreat();
                             }
                         },
                         onCreat: function () {
@@ -209,7 +222,7 @@
                 var changeCb = {
                     beforeChange: function () {
                         if (callback.beforeChange) {
-                            callback.beforeChange();
+                            return callback.beforeChange();
                         }
                     },
                     onChange: function () {
@@ -225,7 +238,7 @@
                 }, closeCb = {
                     beforeClose: function () {
                         if (callback.beforeClose) {
-                            callback.beforeClose();
+                            return callback.beforeClose();
                         }
                     },
                     onClose: function () {

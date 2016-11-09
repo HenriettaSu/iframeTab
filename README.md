@@ -12,9 +12,9 @@ jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件�
 
 ## 最近更新
 
-ver 2.1.1
+ver 2.1.2
 
-1. 修復Mac下右鍵菜單不能正常開啟bug；
+1. 優化事件回調函數，在即將創建、切換、關閉窗口時可通過返回值確定是否允許操作；
 
 
 ## 使用
@@ -30,8 +30,8 @@ iframeTab.init();
 但我想你們會有自己的配置：
 
 ```js
-iframeTab.init({ 
-    closesBtnClass: 'fa fa-close', 
+iframeTab.init({
+    closesBtnClass: 'fa fa-close',
     callback: {
         beforeChange: function () {
             $('.tab-panel.active iframe').hide();
@@ -80,13 +80,13 @@ iframeTab.init({
 #### iframe結構
 
 ```html
-<div class="tabs-body"> 
+<div class="tabs-body">
     <div class="tab-panel tab-keep active">
         <!-- 包裹iFrame的外部元素，可按自己需求更改，如需設置，應同時在option中配置iframeBox -->
         <div class="right_col" role="main">
             <iframe src="my-desktop.html" data-iframe="my-desktop.html" data-num="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onload="iframeTab.iframeHeight()" height="188"></iframe>
         </div>
-    </div> 
+    </div>
 </div>
 ```
 

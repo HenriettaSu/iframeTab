@@ -34,13 +34,20 @@
 	  </div>
     </div>
   </div>
-  
+
   <script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
   <script src="../vendor/gentelella/custom.js"></script>
   <script src="../build/js/iframeTab.js"></script>
   <script>
-    var iframeTabOption = {}
-    iframeTab.init(iframeTabOption);
+    var iframeTabOption = {
+        callback: {
+            beforeCreat: function () {
+                alert('操作被終止了');
+                return false
+            }
+        }
+    }
+    iframeTab.init();
   </script>
 </body>

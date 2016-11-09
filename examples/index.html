@@ -132,7 +132,7 @@
       </div>
       <!-- /top navigation -->
       <!-- page content -->
-	  
+
 	  <div class="tabs-container">
 	    <div class="tabs-header">
 		  <ul><li class="active tab-keep" data-tab="my-desktop.html" data-num="0">首頁</li></ul>
@@ -141,7 +141,7 @@
 		  <div class="tab-panel active tab-keep"><div class="right_col" role="main"><iframe src="my-desktop.html" data-iframe="my-desktop.html" data-num="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onLoad="iframeTab.iframeHeight()"></iframe></div></div>
 	    </div>
 	  </div>
-	  
+
       <!-- /page content -->
 	  <footer class="tab-footer clearfix">
         Profiles and demoPages by Stanlie29
@@ -164,7 +164,9 @@
     var creatOption = {
         callback: {
             beforeCreat: function () {
-                $('.tab-panel.active iframe').hide();
+                // $('.tab-panel.active iframe').hide();
+                alert('創建操作被終止');
+                return false
             },
             onCreat: function () {
                 $('.tab-panel.active iframe').hide();
@@ -174,12 +176,14 @@
             }
         }
     }
-    
+
     // 傳入以下changeOption，可觀察不同狀態的捕獲
     var changeOption = {
         callback: {
             beforeChange: function () {
-                $('.tab-panel.active iframe').hide();
+                // $('.tab-panel.active iframe').hide();
+                alert('切換操作被終止');
+                return false
             },
             onChange: function () {
                 $('.tab-panel.active iframe').hide();
@@ -189,12 +193,13 @@
             }
         }
     }
-    
+
     // 傳入以下closeOption，可觀察不同狀態的捕獲
     var closeOption = {
         callback: {
             beforeClose: function () {
-                alert('窗口即將關閉');
+                alert('關閉操作被終止');
+                return false
             },
             onClose: function () {
                 $('.tab-panel.active iframe').hide();
@@ -204,7 +209,7 @@
             }
         }
     }
-    
+
     iframeTab.init();
   </script>
 </body>

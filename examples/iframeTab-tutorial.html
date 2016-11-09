@@ -119,7 +119,7 @@
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;iframe src=&quot;my-desktop.html&quot; data-iframe=&quot;my-desktop.html&quot; data-num=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; onload=&quot;iframeTab.iframeHeight()&quot; height=&quot;188&quot;&gt;&lt;/iframe&gt;<br />
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br />
                   &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt; <br />
-                  &lt;/div&gt; 
+                  &lt;/div&gt;
                 </code>
                 <br />
                 <br />
@@ -204,39 +204,78 @@
                 </li>
                 <li>
                   <code>callback.beforeCreat</code> | Function ()
-                  <p>用於捕獲窗口創建之前的事件回調函數，[ default: null ]</p>
+                  <p>
+                    用於捕獲窗口創建之前的事件回調函數，並根據返回值確定是否允許創建窗口操作，[ default: null ]<br />
+                    <br />
+                    實例：禁止創建窗口操作
+                  </p>
+                  <div class="alert alert-info">
+                      var option = {<br />
+                      &nbsp;&nbsp;&nbsp;&nbsp;callback: {<br />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeCreat: function () {<br />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false<br />
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                      &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                      }
+                  </div>
                 </li>
                 <li>
                   <code>callback.beforeChange</code> | Function ()
-                  <p>用於捕獲窗口切換之前的事件回調函數，[ default: null ]</p>
+                  <p>
+                    用於捕獲窗口切換之前的事件回調函數，並根據返回值確定是否允許切換窗口操作，[ default: null ]<br />
+                    <br />
+                    實例：禁止創建切換操作
+                  </p>
+                  <div class="alert alert-info">
+                    var option = {<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;callback: {<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeChange: function () {<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                    }
+                  </div>
                 </li>
                 <li>
                   <code>callback.beforeClose</code> | Function ()
-                  <p>用於捕獲窗口關閉之前的事件回調函數，[ default: null ]</p>
+                  <p>
+                    用於捕獲窗口關閉之前的事件回調函數，並根據返回值確定是否允許關閉窗口操作，[ default: null ]<br />
+                    <br />
+                    實例：禁止創建關閉操作
+                  </p>
+                  <div class="alert alert-info">
+                    var option = {<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;callback: {<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeClose: function () {<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                    }
+                  </div>
                 </li>
                 <li>
                   <code>callback.onCreat</code> | Function ()
-                  <p>用於捕獲窗口創建時的事件回調函數，[ default: null ]</p>
+                  <p>用於捕獲窗口創建時的事件回調函數，若設置了callback.beforeCreat方法，且返回false，將無法出發onCreat事件回調函數，[ default: null ]</p>
                 </li>
                 <li>
                   <code>callback.onChange</code> | Function ()
-                  <p>用於捕獲窗口切換時的事件回調函數，[ default: null ]</p>
+                  <p>用於捕獲窗口切換時的事件回調函數，若設置了callback.beforeChange方法，且返回false，將無法出發onChange事件回調函數，[ default: null ]</p>
                 </li>
                 <li>
                   <code>callback.onClose</code> | Function ()
-                  <p>用於捕獲窗口關閉時的事件回調函數，[ default: null ]</p>
+                  <p>用於捕獲窗口關閉時的事件回調函數，若設置了callback.beforeClose方法，且返回false，將無法出發onClose事件回調函數，[ default: null ]</p>
                 </li>
                 <li>
                   <code>callback.afterCreat</code> | Function ()
-                  <p>用於捕獲窗口創建之後的事件回調函數，[ default: null ]</p>
+                  <p>用於捕獲窗口創建之後的事件回調函數，若設置了callback.beforeCreat方法，且返回false，將無法出發afterCreat事件回調函數，[ default: null ]</p>
                 </li>
                 <li>
                   <code>callback.afterChange</code> | Function ()
-                  <p>用於捕獲窗口切換之後的事件回調函數，[ default: null ]</p>
+                  <p>用於捕獲窗口切換之後的事件回調函數，若設置了callback.beforeChange方法，且返回false，將無法出發afterChange事件回調函數，[ default: null ]</p>
                 </li>
                 <li>
                   <code>callback.afterClose</code> | Function ()
-                  <p>用於捕獲窗口關閉之後的事件回調函數，[ default: null ]</p>
+                  <p>用於捕獲窗口關閉之後的事件回調函數，若設置了callback.beforeClose方法，且返回false，將無法出發afterClose事件回調函數，[ default: null ]</p>
                 </li>
               </ul>
             </div>
@@ -315,7 +354,7 @@
 		</div>
     </div>
   </div>
-  
+
   <script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
   <script src="../vendor/gentelella/custom.js"></script>
