@@ -12,25 +12,27 @@ jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件�
 
 ## 最近更新
 
-ver 2.1.2
+ver 2.2.0
 
-1. 優化事件回調函數，在即將創建、切換、關閉窗口時可通過返回值確定是否允許操作；
+1. 優化代碼結構，增強可讀性；
+2. 增加 `destroy()` 方法和 `dispose()` 方法，分別用於銷毀實例和釋放對象；
+3. 增加 `on()` 綁定事件處理函數；
 
 
 ## 使用
 
 ### JS
 
-使用本默認框架的話這樣就可以初始化iframeTab了：
+初始化iframeTab並返回實例：
 
 ```js
-iframeTab.init();
+var tab = iframeTab.init();
 ```
 
 但我想你們會有自己的配置：
 
 ```js
-iframeTab.init({
+var tab = iframeTab.init({
     closesBtnClass: 'fa fa-close',
     callback: {
         beforeChange: function () {

@@ -20,7 +20,7 @@
         <div class="clearfix">
           <div class="page-title">
             <div class="title_left">
-              <h3 id="test">iframeTab 文檔</h3>
+              <h3 id="title">iframeTab 文檔</h3>
             </div>
 			<div class="title_right">
 			  <div class="pull-right">
@@ -70,12 +70,43 @@
                 <code>
                   &lt;a href=&quot;iframeTab-demo.html&quot; data-num=&quot;0&quot;&gt;&#20027;&#38913;&lt;/a&gt; <br />
                 </code>
-                <br />
-                必須包含 <code>data-num="0"</code>，以此區別一般瀏覽器新開窗口與以iframeTab開啟的鏈接 <br />
-                <code>data-name</code> 為可選屬性，默認a標籤內文字，優先級：data-name > a.text() <br />
-                <code>data-mul</code> 為可選屬性，若存在，則此鏈接可同時多個創建窗口 <br />
-                <code>data-reload</code> 為可選屬性，若存在，則再次點擊此鏈接時，iframe將被重新加載 <br />
               </p>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>屬性</th>
+                    <th>類型</th>
+                    <th>默認值</th>
+                    <th>描述</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>data-num</td>
+                    <td>Number</td>
+                    <td>0</td>
+                    <td>必要。以此區別一般瀏覽器新開窗口與以iframeTab開啟的鏈接。</td>
+                  </tr>
+                  <tr>
+                    <td>data-name</td>
+                    <td>String</td>
+                    <td>null</td>
+                    <td>可選屬性，默認a標籤內文字，優先級：data-name > a.text() 。</td>
+                  </tr>
+                  <tr>
+                    <td>data-mul</td>
+                    <td>String</td>
+                    <td>null</td>
+                    <td>可選屬性，值不作限制。若存在，則此鏈接可同時多個創建窗口。</td>
+                  </tr>
+                  <tr>
+                    <td>data-reload</td>
+                    <td>String</td>
+                    <td>null</td>
+                    <td>可選屬性，值不作限制。若存在，則再次點擊此鏈接時，iframe將被重新加載。</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 		  </div>
           <div class="x_panel">
@@ -138,9 +169,9 @@
             </div>
 			<div class="x_content">
               <p>
-                <code>iframeTab.init();</code><br />
+                <code>var tab = iframeTab.init();</code><br />
                 <br />
-                通過 <code>iframeTab.init</code> 方法即可初始化iframeTab，可根據需求修改配置數據。 <br />
+                通過 <code>iframeTab.init</code> 方法即可初始化iframeTab並返回一個API實例，可根據需求修改配置數據。 <br />
                 <br />
                 <code>
                   var iframeTabOption = { <br />
@@ -152,7 +183,7 @@
                   &nbsp;&nbsp;&nbsp;&nbsp;}<br />
                   } <br />
                   <br />
-                  iframeTab.init(iframeTabOption);
+                  var tab = iframeTab.init(iframeTabOption);
                 </code>
               </p>
             </div>
@@ -203,79 +234,94 @@
                   <p>某些UI框架下，如本demo，菜單欄位於右側，iFrame內容頁並非佔據整個視窗寬度，此情況下應配置菜單欄寬度，[ default: 230 ]</p>
                 </li>
                 <li>
-                  <code>callback.beforeCreat</code> | Function ()
+                  <code>callback</code> | Array
                   <p>
-                    用於捕獲窗口創建之前的事件回調函數，並根據返回值確定是否允許創建窗口操作，[ default: null ]<br />
-                    <br />
-                    實例：禁止創建窗口操作
+                    用於的事件回調函數，[ default: null ]<br />
                   </p>
-                  <div class="alert alert-info">
-                      var option = {<br />
-                      &nbsp;&nbsp;&nbsp;&nbsp;callback: {<br />
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeCreat: function () {<br />
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false<br />
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
-                      &nbsp;&nbsp;&nbsp;&nbsp;}<br />
-                      }
-                  </div>
-                </li>
-                <li>
-                  <code>callback.beforeChange</code> | Function ()
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>子參數</th>
+                        <th>類型</th>
+                        <th width="65">默認值</th>
+                        <th>描述</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>beforeCreat</td>
+                        <td>Function</td>
+                        <td>null</td>
+                        <td>用於捕獲窗口切換之前的事件回調函數，並根據返回值確定是否允許切換窗口操作。</td>
+                      </tr>
+                      <tr>
+                        <td>onCreat</td>
+                        <td>Function</td>
+                        <td>null</td>
+                        <td>用於捕獲窗口創建時的事件回調函數，若設置了callback.beforeCreat方法，且返回false，將無法出發onCreat事件回調函數。</td>
+                      </tr>
+                      <tr>
+                        <td>afterCreat</td>
+                        <td>Function</td>
+                        <td>null</td>
+                        <td>用於捕獲窗口創建之後的事件回調函數，若設置了callback.beforeCreat方法，且返回false，將無法出發afterCreat事件回調函數。</td>
+                      </tr>
+                      <tr>
+                        <td>beforeChange</td>
+                        <td>Function</td>
+                        <td>null</td>
+                        <td>用於捕獲窗口切換之前的事件回調函數，並根據返回值確定是否允許切換窗口操作。</td>
+                      </tr>
+                      <tr>
+                        <td>onChange</td>
+                        <td>Function</td>
+                        <td>null</td>
+                        <td>用於捕獲窗口切換時的事件回調函數，若設置了callback.beforeChange方法，且返回false，將無法出發onChange事件回調函數</td>
+                      </tr>
+                      <tr>
+                        <td>afterChange</td>
+                        <td>Function</td>
+                        <td>null</td>
+                        <td>用於捕獲窗口切換之後的事件回調函數，若設置了callback.beforeChange方法，且返回false，將無法出發afterChange事件回調函數。</td>
+                      </tr>
+                      <tr>
+                        <td>beforeClose</td>
+                        <td>Function</td>
+                        <td>null</td>
+                        <td>用於捕獲窗口關閉之前的事件回調函數，並根據返回值確定是否允許關閉窗口操作。</td>
+                      </tr>
+                      <tr>
+                        <td>onClose</td>
+                        <td>Function</td>
+                        <td>null</td>
+                        <td>用於捕獲窗口關閉時的事件回調函數，若設置了callback.beforeClose方法，且返回false，將無法出發onClose事件回調函數。</td>
+                      </tr>
+                      <tr>
+                        <td>afterClose</td>
+                        <td>Function</td>
+                        <td>null</td>
+                        <td>用於捕獲窗口關閉之後的事件回調函數，若設置了callback.beforeClose方法，且返回false，將無法出發afterClose事件回調函數。</td>
+                      </tr>
+                    </tbody>
+                  </table>
                   <p>
-                    用於捕獲窗口切換之前的事件回調函數，並根據返回值確定是否允許切換窗口操作，[ default: null ]<br />
-                    <br />
-                    實例：禁止創建切換操作
+                    實例：禁止操作
                   </p>
                   <div class="alert alert-info">
                     var option = {<br />
                     &nbsp;&nbsp;&nbsp;&nbsp;callback: {<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeChange: function () {<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeCreat: function () {&nbsp;&nbsp;// 禁止創建窗口操作<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeChange: function () {&nbsp;&nbsp;// 禁止切換窗口操作<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeClose: function () {&nbsp;&nbsp;// 禁止關閉窗口操作<br />
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false<br />
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
                     &nbsp;&nbsp;&nbsp;&nbsp;}<br />
                     }
                   </div>
-                </li>
-                <li>
-                  <code>callback.beforeClose</code> | Function ()
-                  <p>
-                    用於捕獲窗口關閉之前的事件回調函數，並根據返回值確定是否允許關閉窗口操作，[ default: null ]<br />
-                    <br />
-                    實例：禁止創建關閉操作
-                  </p>
-                  <div class="alert alert-info">
-                    var option = {<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;callback: {<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeClose: function () {<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br />
-                    }
-                  </div>
-                </li>
-                <li>
-                  <code>callback.onCreat</code> | Function ()
-                  <p>用於捕獲窗口創建時的事件回調函數，若設置了callback.beforeCreat方法，且返回false，將無法出發onCreat事件回調函數，[ default: null ]</p>
-                </li>
-                <li>
-                  <code>callback.onChange</code> | Function ()
-                  <p>用於捕獲窗口切換時的事件回調函數，若設置了callback.beforeChange方法，且返回false，將無法出發onChange事件回調函數，[ default: null ]</p>
-                </li>
-                <li>
-                  <code>callback.onClose</code> | Function ()
-                  <p>用於捕獲窗口關閉時的事件回調函數，若設置了callback.beforeClose方法，且返回false，將無法出發onClose事件回調函數，[ default: null ]</p>
-                </li>
-                <li>
-                  <code>callback.afterCreat</code> | Function ()
-                  <p>用於捕獲窗口創建之後的事件回調函數，若設置了callback.beforeCreat方法，且返回false，將無法出發afterCreat事件回調函數，[ default: null ]</p>
-                </li>
-                <li>
-                  <code>callback.afterChange</code> | Function ()
-                  <p>用於捕獲窗口切換之後的事件回調函數，若設置了callback.beforeChange方法，且返回false，將無法出發afterChange事件回調函數，[ default: null ]</p>
-                </li>
-                <li>
-                  <code>callback.afterClose</code> | Function ()
-                  <p>用於捕獲窗口關閉之後的事件回調函數，若設置了callback.beforeClose方法，且返回false，將無法出發afterClose事件回調函數，[ default: null ]</p>
                 </li>
               </ul>
             </div>
@@ -299,22 +345,122 @@
                 <br />
                 <code>parent.iframeTab.iframeHeight(updateHeight)</code>
               </p>
+              <h4 class="mt-15">參數：</h3>
               <ul class="change-log">
                 <li>
-                  <code>updateHeight</code> | number<br />
+                  <code>updateHeight</code> | Number<br />
                   <p>
                   某些情況，頁面包含脫離文檔流的元素且超出document高度，此時應獲取該元素高度并作為參數傳入。<br />
                   忽略此參數，表示取iframe的document高度。
                   </p>
                 </li>
               </ul>
-              <br />
-              <br />
+            </div>
+		  </div>
+          <div class="x_panel">
+			<div class="x_title clearfix">
+			  <h2>返回對象的API</h2>
+		      <ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              </ul>
+            </div>
+			<div class="x_content">
               <p>
-                <code>iframeTab.closeActIframe()</code><br />
+                <code>var tab = iframeTab.init()</code>
                 <br />
-                執行此函數，將關閉當前iframe窗口。
+                <br />
+                初始化iframeTab時將同時創建一個API實例，返回的對象可使用以下API方法。
+              </p>
+              <hr />
               <p>
+                <code>tab.on(event, handler)</code> | event: String, handler: Function<br />
+                <br />
+                綁定事件處理函數，用於監聽並執行你的代碼。
+              <p>
+              <h4 class="mt-15">參數：</h4>
+              <ul class="change-log">
+                <li>
+                  <code>eventName</code> | String<br />
+                  <p>
+                    事件名稱。
+                  </p>
+                </li>
+                <li>
+                  <code>handler</code> | Function<br />
+                  <p>
+                    事件處理函數。
+                  </p>
+                </li>
+              </ul>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>事件類型</th>
+                    <th>描述</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>beforeCreat</td>
+                    <td>此事件在窗口被創建前被觸法。若返回值為 <code>false</code>，將禁止創建窗口操作。在此事件下執行操作被激活的iframe的函數，將操作到舊有被激活窗口上。</td>
+                  </tr>
+                  <tr>
+                    <td>onCreat</td>
+                    <td>此事件在iframe加載完畢前被觸法。</td>
+                  </tr>
+                  <tr>
+                    <td>afterCreat</td>
+                    <td>窗口被創建且iframe加載成功後觸法此事件，在此事件下執行操作iframe的函數，將操作到新窗口上。</td>
+                  </tr>
+                  <tr>
+                    <td>beforeChange</td>
+                    <td>此事件在窗口被切換前被觸法。若返回值為 <code>false</code>，將禁止切換窗口操作。在此事件下執行操作被激活的iframe的函數，將操作到舊有被激活上。</td>
+                  </tr>
+                  <tr>
+                    <td>onChange</td>
+                    <td>此事件在舊有iframe被隱藏，且新iframe尚未被顯示時被觸法。</td>
+                  </tr>
+                  <tr>
+                    <td>afterChange</td>
+                    <td>窗口被切換後觸法此事件，在此事件下執行操作iframe的函數，將操作到新窗口上。</td>
+                  </tr>
+                  <tr>
+                    <td>beforeClose</td>
+                    <td>此事件在窗口被關閉前被觸法。若返回值為 <code>false</code>，將禁止關閉窗口操作。在此事件下執行操作被激活的iframe的函數，將操作到舊有被激活上。</td>
+                  </tr>
+                  <tr>
+                    <td>onClose</td>
+                    <td>此事件在舊有iframe被關閉，且新iframe尚未被創建時被觸法。</td>
+                  </tr>
+                  <tr>
+                    <td>afterClose</td>
+                    <td>窗口被關閉後觸法此事件，在此事件下執行操作iframe的函數，將操作到新窗口上。</td>
+                  </tr>
+                </tbody>
+              </table>
+              <hr />
+              <p>
+                <code>tab.closeActIframe()</code><br />
+                <br />
+                執行此方法，將關閉當前iframe窗口。
+              <p>
+              <hr />
+              <p>
+                <code>tab.destroy()</code>
+                <br />
+                <br />
+                銷毀實例，銷毀後超連結將創建窗口到瀏覽器標籤爛上，除 <code>dispose</code> 方法外，所有實例方法也無法再被使用。<br />
+                重新使用iframeTab，必須使用 <code>init</code> 方法重新初始化。
+              </p>
+              <hr />
+              <p>
+                <code>tab.dispose(refName)</code> | String
+                <br />
+                <br />
+                解綁所有事件、銷毀實例的同時，釋放對象。
+              </p>
+              <h4 class="mt-15">參數：</h4>
+              <p>需傳入聲明保存實例的全局變量名稱，否則將無法釋放。此例需傳入的是 <code>tab</code>。</p>
             </div>
 		  </div>
           <div class="x_panel">
@@ -360,7 +506,12 @@
   <script src="../vendor/gentelella/custom.js"></script>
   <script src="../dist/js/iframeTab.min.js"></script>
   <script>
-    var iframeTabOption = {}
-    iframeTab.init(iframeTabOption);
+    var iframeTabOption = {},
+        tab;
+    tab = iframeTab.init(iframeTabOption);
+
+    $('#title').click(function () {
+        tab.closeActIframe();
+    });
   </script>
 </body>
