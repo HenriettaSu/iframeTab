@@ -144,7 +144,7 @@
 
       <!-- /page content -->
 	  <footer class="tab-footer clearfix">
-        Profiles and demoPages by Stanlie29
+        Profiles and demoPages by HenriettaSu
       </footer>
     </div>
   </div>
@@ -212,9 +212,20 @@
 
     var tab = iframeTab.init();
 
-    tab.on('beforeClose', function () {
-        alert('窗口即將被關閉');
+    tab.on('beforeChange', function () {
+        alert('窗口即將被切換');
     });
+
+    tab.on({
+        beforeCreat: function () {
+            alert('窗口即將被創建');
+        },
+        beforeClose: function () {
+            alert('窗口即將被關閉');
+        }
+    });
+
+    tab.off('beforeChange beforeCreat');
   </script>
 </body>
 </html>
