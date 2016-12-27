@@ -1,4 +1,4 @@
-# iframeTab plug-in for jQuery 2.2.2
+# iframeTab plug-in for jQuery 2.2.3
 
 jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件，在標籤過多情況下將自動折疊成一行，還可右鍵關閉所有標籤。
 
@@ -12,9 +12,9 @@ jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件�
 
 ## 最近更新
 
-ver 2.2.2
+ver 2.2.3
 
-1. 修復 `data-reload` 需存在且值為 `ja` 才能再次點擊刷新頁面bug；
+1. 縮放瀏覽器窗口時自動刷新iframe高度；
 
 
 ## 使用

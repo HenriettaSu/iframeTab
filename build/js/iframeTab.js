@@ -1,6 +1,6 @@
 /*
  * iframeTab
- * Version: 2.2.2
+ * Version: 2.2.3
  *
  * Plugin that can simulate browser to open links as tab and iframe in a page
  *
@@ -8,7 +8,7 @@
  *
  * License: MIT
  *
- * Released on: December 08, 2016
+ * Released on: December 27, 2016
  */
 
 (function () {
@@ -267,6 +267,9 @@
                 return Array.isArray(evt) ? 'array' : typeof evt;
             }
 
+            $(window).resize(function () {
+                parent.iframeTab.iframeHeight();
+            });
             $(document).on('mouseup.iframetab', 'a[data-num]', stellung);
             if ($('.tabs-header li', p).length === 1) {
                 var changeCb = {
