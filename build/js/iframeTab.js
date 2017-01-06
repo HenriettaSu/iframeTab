@@ -1,6 +1,6 @@
 /*
  * iframeTab
- * Version: 2.2.3
+ * Version: 2.3.0
  *
  * Plugin that can simulate browser to open links as tab and iframe in a page
  *
@@ -8,7 +8,7 @@
  *
  * License: MIT
  *
- * Released on: December 27, 2016
+ * Released on: January 07, 2017
  */
 
 (function () {
