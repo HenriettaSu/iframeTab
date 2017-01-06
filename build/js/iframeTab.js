@@ -26,6 +26,7 @@
             var _tab = this,
                 tab = _tab.prototype,
                 tnum = 0,
+                tabList = {},
                 p = window.parent.document,
                 options = $.extend({
                     tabLiClass: '',
@@ -76,6 +77,7 @@
                     if (beforeCreatBoolean === false) {
                         return false
                     }
+                    tabList[link] = true;
                     $tabLi.removeClass('active');
                     $tabUl.append('<li class="active ' + tabLiClass + '" data-tab="' + link + '" data-name="' + name + '" data-num="' + tnum + '">' + name + '<i class="' + closesBtnClass + '" data-btn="close"></i></li>');
                     if (!$('.tabs-header [data-btn="switch"]').length && $tabUl.height() > singleLineheight) {
@@ -124,19 +126,13 @@
                             }
                         }
                     }
-                    if ($('.tabs-header li[data-name="' + name + '"]', p).length > 0 && typeof mul === 'undefined') {
-                        if (!$('.tabs-header li[data-tab="' + link + '"]', p).length > 0) {
-                            $tabUl.find('li[data-name="' + name + '"]').remove();
-                            $tabBody.find('iframe[data-iframe="' + tab + '"]').remove();
-                            stellen(cb);
-                        } else {
-                            $tabLi.removeClass('active');
-                            $tabUl.find('li[data-tab="' + link + '"]').addClass('active');
-                            $tabPan.removeClass('active');
-                            $tabBody.find('iframe[data-iframe="' + link + '"]').parents('.tab-panel').addClass('active');
-                            if (reload) {
-                                $tabBody.find('iframe[data-iframe="' + link + '"]').attr('src', link);
-                            }
+                    if (tabList[link] && typeof mul === 'undefined') {
+                        $tabLi.removeClass('active');
+                        $tabUl.find('li[data-tab="' + link + '"]').addClass('active');
+                        $tabPan.removeClass('active');
+                        $tabBody.find('iframe[data-iframe="' + link + '"]').parents('.tab-panel').addClass('active');
+                        if (reload) {
+                            $tabBody.find('iframe[data-iframe="' + link + '"]').attr('src', link);
                         }
                     } else {
                         stellen(cb);
@@ -161,6 +157,7 @@
                     if (beforeCloseBoolean === false) {
                         return false
                     }
+                    delete tabList[tab];
                     $li.remove();
                     $tabBody.find('iframe[data-iframe="' + tab + '"][data-num="' + dnum + '"]').parents('.tab-panel').remove();
                     $tabLi.each(function () {
@@ -237,12 +234,15 @@
                         $('.tabs-header li:not(.tab-keep)').remove();
                         $('.tab-panel:not(.tab-keep)').remove();
                         $('.tabs-header li.tab-keep').click();
+                        tabList = {};
                     });
                     $(document).on('click.context.remove.sing', '[data-btn="removeExceptAct"]', function () { // 关闭激活标签外所有标签
                         $('.tabs-header li, .tab-panel').each(function () {
-                            var _this = $(this);
+                            var _this = $(this),
+                                tab = _this.data('tab');
                             if (_this.is(':not(.tab-keep)') && _this.is(':not(.active)')) {
                                 _this.remove();
+                                delete tabList[tab]
                             }
                         });
                         $('.tabs-header li.active').click();
@@ -271,7 +271,7 @@
                 parent.iframeTab.iframeHeight();
             });
             $(document).on('mouseup.iframetab', 'a[data-num]', stellung);
-            if ($('.tabs-header li', p).length === 1) {
+            if (top === self) {
                 var changeCb = {
                     beforeChange: function () {
                         if (callback.beforeChange) {
@@ -307,8 +307,8 @@
                 }
                 changeTab(changeCb);
                 btnDel(closeCb);
+                $('.tabs-header').on('mousedown.iframetab', creatContextmenu);
             }
-            $('.tabs-header').on('mousedown.iframetab', creatContextmenu);
             if ($('[data-source]').length) {
                 $(document).on('mouseup.iframetab', '[data-source]', function () { // 點擊刷新tab
                     var $this = $(this),
