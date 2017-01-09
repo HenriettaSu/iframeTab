@@ -1,6 +1,6 @@
 /*
  * iframeTab
- * Version: 2.3.1
+ * Version: 2.3.1.1
  *
  * Plugin that can simulate browser to open links as tab and iframe in a page
  *
@@ -10,79 +10,7 @@
  *
  * Released on: January 09, 2017
  */
-
 (function () {
-    var p = window.parent.document,
-        act = 'active',
-        tabList = {},
-        isSwitch = false;
-    function changeTab (cb) { // 切換標籤
-        $(document).on('click.iframetab', '.tabs-header li:not(.active)', function () {
-            var $thisLi = $(this),
-                liLink = $thisLi.data('tab'),
-                cnum = $thisLi.data('num'),
-                $liTabUl = $('.tabs-header ul'),
-                $liTabLi = $('.tabs-header li'),
-                $liTabBody = $('.tabs-body'),
-                $liTabPan = $('.tab-panel'),
-                $activeIframe = $liTabBody.find('iframe[data-iframe="' + liLink + '"][data-num="' + cnum + '"]'),
-                beforeChangeBoolean;
-            beforeChangeBoolean = cb.beforeChange();
-            if (beforeChangeBoolean === false) {
-                return false
-            }
-            $liTabLi.removeClass(act);
-            $liTabPan.removeClass(act);
-            cb.onChange();
-            $liTabUl.find('li[data-tab="' + liLink + '"][data-num="' + cnum + '"]').addClass(act);
-            $activeIframe.parents('.tab-panel').addClass(act);
-            cb.afterChange();
-        });
-    }
-    function btnDel (cb) { // 關閉標籤
-        $(document).on('click.iframetab', '.tabs-header li [data-btn="close"]', function (e) {
-            var $this = $(this),
-                $li = $this.parent(),
-                tab = $li.data('tab'),
-                dnum = $li.data('num'),
-                $tabUl = $('.tabs-header ul'),
-                $tabLi = $('.tabs-header li'),
-                $tabBody = $('.tabs-body'),
-                $prev = $li.prev(),
-                $next = $li.next(),
-                windowWidth = $(window).width(),
-                countWidth = 0,
-                beforeCloseBoolean;
-            beforeCloseBoolean = cb.beforeClose();
-            if (beforeCloseBoolean === false) {
-                return false
-            }
-            delete tabList[tab];
-            $li.remove();
-            $tabBody.find('iframe[data-iframe="' + tab + '"][data-num="' + dnum + '"]').parents('.tab-panel').remove();
-            $tabLi.each(function () {
-                var _this = $(this),
-                    liWidth = _this.width() > 0 ? _this.width() + 25 : _this.width();
-                countWidth += liWidth;
-            });
-            if (isSwitch && countWidth < windowWidth - menuWidth) {
-                $('.tabs-header').find('[data-btn="switch"]').remove();
-                $(document).off('click.iframetab.switch');
-                isSwitch = false;
-                $tabUl.toggleClass('hide-tab');
-                $tabUl.width('auto');
-            }
-            cb.onClose();
-            if (typeof $prev.html() === 'undefined') {
-                $next.click();
-            } else {
-                $prev.click();
-            }
-            e.preventDefault();
-            e.stopPropagation();
-            cb.afterClose();
-        });
-    }
     iframeTab = jQuery.prototype = {
         iframeHeight: function(updateHeight) {
             var ifm = $('.active iframe')[0],
@@ -96,7 +24,10 @@
         init: function (option) {
             var _tab = this,
                 tab = _tab.prototype,
+                p = window.parent.document,
+                act = 'active',
                 tnum = 0,
+                isSwitch = false,
                 options = $.extend({
                     tabLiClass: '',
                     tabPanClass: '',
@@ -119,6 +50,7 @@
                 menuWidth = options.menuWidth,
                 contextmenuClass = options.contextmenuClass,
                 callback = options.callback;
+            tabList = parent.tabList || {};
 
             function stellung (event) { // 創建窗口
                 var $this = $(this),
@@ -208,6 +140,73 @@
                         stellen(cb);
                     }
                 }
+            }
+            function changeTab (cb) { // 切換標籤
+                $(document).on('click.iframetab', '.tabs-header li:not(.active)', function () {
+                    var $thisLi = $(this),
+                        liLink = $thisLi.data('tab'),
+                        cnum = $thisLi.data('num'),
+                        $liTabUl = $('.tabs-header ul'),
+                        $liTabLi = $('.tabs-header li'),
+                        $liTabBody = $('.tabs-body'),
+                        $liTabPan = $('.tab-panel'),
+                        $activeIframe = $liTabBody.find('iframe[data-iframe="' + liLink + '"][data-num="' + cnum + '"]'),
+                        beforeChangeBoolean;
+                    beforeChangeBoolean = cb.beforeChange();
+                    if (beforeChangeBoolean === false) {
+                        return false
+                    }
+                    $liTabLi.removeClass(act);
+                    $liTabPan.removeClass(act);
+                    cb.onChange();
+                    $liTabUl.find('li[data-tab="' + liLink + '"][data-num="' + cnum + '"]').addClass(act);
+                    $activeIframe.parents('.tab-panel').addClass(act);
+                    cb.afterChange();
+                });
+            }
+            function btnDel (cb) { // 關閉標籤
+                $(document).on('click.iframetab', '.tabs-header li [data-btn="close"]', function (e) {
+                    var $this = $(this),
+                        $li = $this.parent(),
+                        tab = $li.data('tab'),
+                        dnum = $li.data('num'),
+                        $tabUl = $('.tabs-header ul'),
+                        $tabLi = $('.tabs-header li'),
+                        $tabBody = $('.tabs-body'),
+                        $prev = $li.prev(),
+                        $next = $li.next(),
+                        windowWidth = $(window).width(),
+                        countWidth = 0,
+                        beforeCloseBoolean;
+                    beforeCloseBoolean = cb.beforeClose();
+                    if (beforeCloseBoolean === false) {
+                        return false
+                    }
+                    delete tabList[tab];
+                    $li.remove();
+                    $tabBody.find('iframe[data-iframe="' + tab + '"][data-num="' + dnum + '"]').parents('.tab-panel').remove();
+                    $tabLi.each(function () {
+                        var _this = $(this),
+                            liWidth = _this.width() > 0 ? _this.width() + 25 : _this.width();
+                        countWidth += liWidth;
+                    });
+                    if (isSwitch && countWidth < windowWidth - menuWidth) {
+                        $('.tabs-header').find('[data-btn="switch"]').remove();
+                        $(document).off('click.iframetab.switch');
+                        isSwitch = false;
+                        $tabUl.toggleClass('hide-tab');
+                        $tabUl.width('auto');
+                    }
+                    cb.onClose();
+                    if (typeof $prev.html() === 'undefined') {
+                        $next.click();
+                    } else {
+                        $prev.click();
+                    }
+                    e.preventDefault();
+                    e.stopPropagation();
+                    cb.afterClose();
+                });
             }
             function creatContextmenu (e) { // 右鍵菜單
                 var $this = $(this),
@@ -410,5 +409,4 @@
             return tab;
         }
     }
-
 }());
