@@ -1,6 +1,6 @@
 /*
  * iframeTab
- * Version: 2.3.1.1
+ * Version: 2.3.2
  *
  * Plugin that can simulate browser to open links as tab and iframe in a page
  *
@@ -8,7 +8,7 @@
  *
  * License: MIT
  *
- * Released on: January 09, 2017
+ * Released on: January 10, 2017
  */
 (function () {
     iframeTab = jQuery.prototype = {
@@ -24,10 +24,13 @@
         init: function (option) {
             var _tab = this,
                 tab = _tab.prototype,
-                p = window.parent.document,
                 act = 'active',
                 tnum = 0,
+                isTop = (top === self),
                 isSwitch = false,
+                p = isTop ? null : window.parent.document,
+                $tabUl = $('.tabs-header ul', p),
+                $tabBody = $('.tabs-body', p),
                 options = $.extend({
                     tabLiClass: '',
                     tabPanClass: '',
@@ -58,9 +61,7 @@
                     name = $this.attr('data-name') ? $this.data('name') : $this.text(),
                     mul = $this.data('mul'),
                     reload = $this.data('reload'),
-                    $tabUl = $('.tabs-header ul', p),
                     $tabLi = $('.tabs-header li', p),
-                    $tabBody = $('.tabs-body', p),
                     $tabPan = $('.tab-panel', p),
                     tab = $tabUl.find('li[data-name="' + name + '"]').data('tab'),
                     iframe = $('<iframe src="' + link + '" data-iframe="' + link + '" data-num="' + tnum + '" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onLoad="iframeTab.iframeHeight()" name="' + tnum + '"></iframe>');
@@ -81,7 +82,7 @@
                     tabList[link] = true;
                     $tabLi.removeClass(act);
                     $tabUl.append('<li class="active ' + tabLiClass + '" data-tab="' + link + '" data-name="' + name + '" data-num="' + tnum + '">' + name + '<i class="' + closesBtnClass + '" data-btn="close"></i></li>');
-                    if (isSwitch === false && $tabUl.height() > singleLineheight) {
+                    if (!isSwitch && $tabUl.height() > singleLineheight) {
                         $newTabLiLast = $tabUl.find('li:last-child');
                         $tabUl.width(tabUlWidth - 30);
                         $tabUl.addClass('hide-tab');
@@ -170,9 +171,7 @@
                         $li = $this.parent(),
                         tab = $li.data('tab'),
                         dnum = $li.data('num'),
-                        $tabUl = $('.tabs-header ul'),
                         $tabLi = $('.tabs-header li'),
-                        $tabBody = $('.tabs-body'),
                         $prev = $li.prev(),
                         $next = $li.next(),
                         windowWidth = $(window).width(),
@@ -219,8 +218,7 @@
                         '<li><a href="javascript: void(0)" data-btn="removeExceptAct">关闭激活标签外所有标签</a></li>' +
                         '</ul>' +
                         '</div>',
-                    contextmenuWidth = 180,
-                    $tabUl = $('.tabs-header ul');
+                    contextmenuWidth = 180;
                 if (e.which === 3) {
                     $this.on('contextmenu', function (event) {
                         event.preventDefault();
@@ -289,7 +287,7 @@
                 parent.iframeTab.iframeHeight();
             });
             $(document).on('mouseup.iframetab', 'a[data-num]', stellung);
-            if (top === self) {
+            if (isTop) {
                 var changeCb = {
                     beforeChange: function () {
                         if (callback.beforeChange) {
@@ -330,8 +328,7 @@
             if ($('[data-source]').length) {
                 $(document).on('mouseup.iframetab', '[data-source]', function () { // 點擊刷新tab
                     var $this = $(this),
-                        source = $this.data('source'),
-                        $tabBody = $('.tabs-body', p);
+                        source = $this.data('source');
                     $tabBody.find('iframe[src="' + source + '"]').attr('src', source);
                     iframeTab.iframeHeight();
                 });
