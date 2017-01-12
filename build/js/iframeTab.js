@@ -1,6 +1,6 @@
 /*
  * iframeTab
- * Version: 2.3.2
+ * Version: 2.3.3
  *
  * Plugin that can simulate browser to open links as tab and iframe in a page
  *
@@ -8,7 +8,7 @@
  *
  * License: MIT
  *
- * Released on: January 10, 2017
+ * Released on: January 12, 2017
  */
 (function () {
     iframeTab = jQuery.prototype = {
@@ -25,8 +25,8 @@
             var _tab = this,
                 tab = _tab.prototype,
                 act = 'active',
-                tnum = 0,
                 isTop = (top === self),
+                isOpen = false,
                 isSwitch = false,
                 p = isTop ? null : window.parent.document,
                 $tabUl = $('.tabs-header ul', p),
@@ -59,12 +59,13 @@
                 var $this = $(this),
                     link = $this.attr('href'),
                     name = $this.attr('data-name') ? $this.data('name') : $this.text(),
+                    date = new Date().getTime(),
                     mul = $this.data('mul'),
                     reload = $this.data('reload'),
                     $tabLi = $('.tabs-header li', p),
                     $tabPan = $('.tab-panel', p),
                     tab = $tabUl.find('li[data-name="' + name + '"]').data('tab'),
-                    iframe = $('<iframe src="' + link + '" data-iframe="' + link + '" data-num="' + tnum + '" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onLoad="iframeTab.iframeHeight()" name="' + tnum + '"></iframe>');
+                    iframe = $('<iframe src="' + link + '" data-iframe="' + link + '" data-num="' + date + '" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onLoad="iframeTab.iframeHeight()" name="' + date + '"></iframe>');
                 $this.on('click', function (e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -81,7 +82,7 @@
                     }
                     tabList[link] = true;
                     $tabLi.removeClass(act);
-                    $tabUl.append('<li class="active ' + tabLiClass + '" data-tab="' + link + '" data-name="' + name + '" data-num="' + tnum + '">' + name + '<i class="' + closesBtnClass + '" data-btn="close"></i></li>');
+                    $tabUl.append('<li class="active ' + tabLiClass + '" data-tab="' + link + '" data-name="' + name + '" data-num="' + date + '">' + name + '<i class="' + closesBtnClass + '" data-btn="close"></i></li>');
                     if (!isSwitch && $tabUl.height() > singleLineheight) {
                         $newTabLiLast = $tabUl.find('li:last-child');
                         $tabUl.width(tabUlWidth - 30);
@@ -109,7 +110,6 @@
                     $(iframe).load(function () {
                         cb.afterCreat();
                     });
-                    tnum = tnum + 1;
                 }
                 if (event.which === 1) {
                     var cb = {
@@ -146,12 +146,12 @@
                 $(document).on('click.iframetab', '.tabs-header li:not(.active)', function () {
                     var $thisLi = $(this),
                         liLink = $thisLi.data('tab'),
-                        cnum = $thisLi.data('num'),
+                        date = $thisLi.data('num'),
                         $liTabUl = $('.tabs-header ul'),
                         $liTabLi = $('.tabs-header li'),
                         $liTabBody = $('.tabs-body'),
                         $liTabPan = $('.tab-panel'),
-                        $activeIframe = $liTabBody.find('iframe[data-iframe="' + liLink + '"][data-num="' + cnum + '"]'),
+                        $activeIframe = $liTabBody.find('iframe[data-iframe="' + liLink + '"][data-num="' + date + '"]'),
                         beforeChangeBoolean;
                     beforeChangeBoolean = cb.beforeChange();
                     if (beforeChangeBoolean === false) {
@@ -160,7 +160,7 @@
                     $liTabLi.removeClass(act);
                     $liTabPan.removeClass(act);
                     cb.onChange();
-                    $liTabUl.find('li[data-tab="' + liLink + '"][data-num="' + cnum + '"]').addClass(act);
+                    $liTabUl.find('li[data-tab="' + liLink + '"][data-num="' + date + '"]').addClass(act);
                     $activeIframe.parents('.tab-panel').addClass(act);
                     cb.afterChange();
                 });
@@ -170,7 +170,7 @@
                     var $this = $(this),
                         $li = $this.parent(),
                         tab = $li.data('tab'),
-                        dnum = $li.data('num'),
+                        date = $li.data('num'),
                         $tabLi = $('.tabs-header li'),
                         $prev = $li.prev(),
                         $next = $li.next(),
@@ -183,7 +183,7 @@
                     }
                     delete tabList[tab];
                     $li.remove();
-                    $tabBody.find('iframe[data-iframe="' + tab + '"][data-num="' + dnum + '"]').parents('.tab-panel').remove();
+                    $tabBody.find('iframe[data-iframe="' + tab + '"][data-num="' + date + '"]').parents('.tab-panel').remove();
                     $tabLi.each(function () {
                         var _this = $(this),
                             liWidth = _this.width() > 0 ? _this.width() + 25 : _this.width();
@@ -212,7 +212,7 @@
                     x = e.clientX,
                     y = e.clientY,
                     windowWidth = window.innerWidth,
-                    contextmenu = '<div class="tab-contextmenu ' + contextmenuClass + '" style="top: ' + y + 'px">' +
+                    contextmenu = '<div class="tab-contextmenu ' + contextmenuClass + '">' +
                         '<ul class="dropdown-menu">' +
                         '<li><a href="javascript: void(0)" data-btn="removeAll">关闭所有标签</a></li>' +
                         '<li><a href="javascript: void(0)" data-btn="removeExceptAct">关闭激活标签外所有标签</a></li>' +
@@ -223,15 +223,18 @@
                     $this.on('contextmenu', function (event) {
                         event.preventDefault();
                     });
-                    if ($('.tab-contextmenu').length) {
-                        $('.tab-contextmenu').remove();
+                    if (!isOpen) {
+                        $('body').after(contextmenu);
+                        isOpen = true;
+                    } else {
+                        $('.tab-contextmenu').addClass('open');
                     }
-                    $('body').before(contextmenu);
                     if (windowWidth - x > contextmenuWidth) {
                         $('.tab-contextmenu').css('left', x);
                     } else {
                         $('.tab-contextmenu').css('right', contextmenuWidth);
                     }
+                    $('.tab-contextmenu').css('top', y);
                     $(document).on('click.context.remove.pl', '[data-btn="removeAll"]', function removeAll() { // 关闭所有标签
                         $('.tabs-header li:not(.tab-keep)').remove();
                         $('.tab-panel:not(.tab-keep)').remove();
@@ -265,12 +268,12 @@
                     });
                     $('body').on('click.hide.context', function () { // 關閉右鍵菜單
                         $('body').off('click.hide.context');
-                        $('.tab-contextmenu').remove();
+                        $('.tab-contextmenu').removeClass('open');
                         $(document).off('click.context.remove.pl', '[data-btn="removeAll"]').off('click.context.remove.sing', '[data-btn="removeExceptAct"]');
                     });
                     $('.tab-panel.active iframe')[0].contentWindow.$('body').on('click.hide.context', function () {
                         $('.tab-panel.active iframe')[0].contentWindow.$('body').off('click.hide.context');
-                        parent.$('.tab-contextmenu').remove();
+                        parent.$('.tab-contextmenu').removeClass('open');
                         parent.$(document).off('click.context.remove.pl', '[data-btn="removeAll"]').off('click.context.remove.sing', '[data-btn="removeExceptAct"]');
                     });
                 }
