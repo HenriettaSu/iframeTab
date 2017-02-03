@@ -1,6 +1,6 @@
 /*
  * iframeTab
- * Version: 2.3.3
+ * Version: 2.3.4
  *
  * Plugin that can simulate browser to open links as tab and iframe in a page
  *
@@ -8,7 +8,7 @@
  *
  * License: MIT
  *
- * Released on: January 12, 2017
+ * Released on: February 03, 2017
  */
 (function () {
     iframeTab = jQuery.prototype = {
@@ -17,7 +17,7 @@
                 subWeb = $(document).frames ? $(document).frames['iframepage'].document : ifm.contentDocument;
             if (updateHeight) {
                 ifm.height = updateHeight;
-            } else if (ifm != null && subWeb != null) {
+            } else if (ifm !== null && subWeb !== null) {
                 ifm.height = subWeb.body.scrollHeight;
             }
         },
@@ -65,7 +65,8 @@
                     $tabLi = $('.tabs-header li', p),
                     $tabPan = $('.tab-panel', p),
                     tab = $tabUl.find('li[data-name="' + name + '"]').data('tab'),
-                    iframe = $('<iframe src="' + link + '" data-iframe="' + link + '" data-num="' + date + '" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onLoad="iframeTab.iframeHeight()" name="' + date + '"></iframe>');
+                    tempLi = '<li class="active ' + tabLiClass + '" data-tab="' + link + '" data-name="' + name + '" data-num="' + date + '">' + name + '<i class="' + closesBtnClass + '" data-btn="close"></i></li>',
+                    $iframe = $('<iframe src="' + link + '" data-iframe="' + link + '" data-num="' + date + '" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onLoad="iframeTab.iframeHeight()" name="' + date + '"></iframe>');
                 $this.on('click', function (e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -82,14 +83,14 @@
                     }
                     tabList[link] = true;
                     $tabLi.removeClass(act);
-                    $tabUl.append('<li class="active ' + tabLiClass + '" data-tab="' + link + '" data-name="' + name + '" data-num="' + date + '">' + name + '<i class="' + closesBtnClass + '" data-btn="close"></i></li>');
+                    $tabUl.append(tempLi);
                     if (!isSwitch && $tabUl.height() > singleLineheight) {
                         $newTabLiLast = $tabUl.find('li:last-child');
                         $tabUl.width(tabUlWidth - 30);
                         $tabUl.addClass('hide-tab');
                         $tabUl.after('<i class="' + switchBtnDown + ' fold-switch" data-btn="switch"></i>');
                         isSwitch = true;
-                        $(document).on('click.iframetab.switch', '.tabs-header [data-btn="switch"]', function () {
+                        $('.tabs-header').on('click.iframetab.switch', '[data-btn="switch"]', function () {
                             var _this = $(this);
                             _this.toggleClass(switchBtnDown);
                             _this.toggleClass(switchBtnUp);
@@ -103,11 +104,11 @@
                         $tabUl.find('li:first-child').before($newTabLiFirst);
                     }
                     $tabPan.removeClass(act);
-                    $tabBody.append(iframe);
-                    iframe.wrap('<div class="tab-panel active ' + tabPanClass + '"></div>');
-                    iframe.wrap(iframeBox);
+                    $tabBody.append($iframe);
+                    $iframe.wrap('<div class="tab-panel active ' + tabPanClass + '"></div>');
+                    $iframe.wrap(iframeBox);
                     cb.onCreat();
-                    $(iframe).load(function () {
+                    $iframe.load(function () {
                         cb.afterCreat();
                     });
                 }
@@ -143,7 +144,7 @@
                 }
             }
             function changeTab (cb) { // 切換標籤
-                $(document).on('click.iframetab', '.tabs-header li:not(.active)', function () {
+                $('.tabs-header').on('click.iframetab', 'li:not(.active)', function () {
                     var $thisLi = $(this),
                         liLink = $thisLi.data('tab'),
                         date = $thisLi.data('num'),
@@ -166,7 +167,7 @@
                 });
             }
             function btnDel (cb) { // 關閉標籤
-                $(document).on('click.iframetab', '.tabs-header li [data-btn="close"]', function (e) {
+                $('.tabs-header').on('click.iframetab', 'li [data-btn="close"]', function (e) {
                     var $this = $(this),
                         $li = $this.parent(),
                         tab = $li.data('tab'),
@@ -190,8 +191,7 @@
                         countWidth += liWidth;
                     });
                     if (isSwitch && countWidth < windowWidth - menuWidth) {
-                        $('.tabs-header').find('[data-btn="switch"]').remove();
-                        $(document).off('click.iframetab.switch');
+                        $('.tabs-header').off('click.iframetab.switch').find('[data-btn="switch"]').remove();
                         isSwitch = false;
                         $tabUl.toggleClass('hide-tab');
                         $tabUl.width('auto');
@@ -223,11 +223,11 @@
                     $this.on('contextmenu', function (event) {
                         event.preventDefault();
                     });
-                    if (!isOpen) {
+                    if (isOpen) {
+                        $('.tab-contextmenu').addClass('open');
+                    } else {
                         $('body').after(contextmenu);
                         isOpen = true;
-                    } else {
-                        $('.tab-contextmenu').addClass('open');
                     }
                     if (windowWidth - x > contextmenuWidth) {
                         $('.tab-contextmenu').css('left', x);
@@ -235,13 +235,12 @@
                         $('.tab-contextmenu').css('right', contextmenuWidth);
                     }
                     $('.tab-contextmenu').css('top', y);
-                    $(document).on('click.context.remove.pl', '[data-btn="removeAll"]', function removeAll() { // 关闭所有标签
+                    $(document).on('click.context.remove.pl', '[data-btn="removeAll"]', function removeAll() { // 關閉所有標籤
                         $('.tabs-header li:not(.tab-keep)').remove();
                         $('.tab-panel:not(.tab-keep)').remove();
                         $('.tabs-header li.tab-keep').click();
                         if (isSwitch) {
-                            $('.tabs-header').find('[data-btn="switch"]').remove();
-                            $(document).off('click.iframetab.switch');
+                            $('.tabs-header').off('click.iframetab.switch').find('[data-btn="switch"]').remove();
                             $tabUl.removeClass('hide-tab');
                             $tabUl.width('auto');
                             isSwitch = false;
@@ -259,8 +258,7 @@
                         });
                         $('.tabs-header li.active').click();
                         if (isSwitch) {
-                            $('.tabs-header').find('[data-btn="switch"]').remove();
-                            $(document).off('click.iframetab.switch');
+                            $('.tabs-header').off('click.iframetab.switch').find('[data-btn="switch"]').remove();
                             $tabUl.removeClass('hide-tab');
                             $tabUl.width('auto');
                             isSwitch = false;
@@ -280,7 +278,7 @@
             }
             function offEvents () { // 解除命名空間為iframetab的事件綁定
                 $(document).off('mouseup.iframetab').off('click.iframetab');
-                $('.tabs-header').off('mousedown.iframetab');
+                $('.tabs-header').off('mousedown.iframetab').off('click.iframetab');
             }
             function testArry (evt) {
                 return Array.isArray(evt) ? 'array' : typeof evt;
@@ -344,8 +342,10 @@
                 });
             }
             tab = {
-                on: function (evtName, handler) {
-                    var evt = evtName,
+                on: function () {
+                    var len = arguments.length,
+                        evt = arguments[0],
+                        cbFunc = arguments[1],
                         evts,
                         evtType = testArry(evt),
                         i,
@@ -353,9 +353,9 @@
                     switch (evtType) {
                         case 'string':
                             evts = evt.split(' ');
-                            for (i = 0; i < evts.length; i++) {
+                            for (i = 0; i < len; i++) {
                                 g = evts[i];
-                                callback[g] = handler;
+                                callback[g] = cbFunc;
                             }
                             break;
                         case 'object':
@@ -371,14 +371,25 @@
                     var evt = evtName,
                         evts,
                         evtType = typeof evt,
+                        hasVal = false,
+                        isEmpty,
+                        len,
                         i,
                         g;
                     switch (evtType) {
                         case 'string':
-                            evts = evt.split(' ');
-                            for (i = 0; i < evts.length; i++) {
-                                g = evts[i];
-                                delete callback[g];
+                            hasVal = (evt !== ' ');
+                            if (hasVal) {
+                                evts = evt.split(' ');
+                                len = evts.length;
+                                if (len === 1) {
+                                    delete callback[evt];
+                                } else {
+                                    for (i = 0; i < len; i++) {
+                                        g = evts[i];
+                                        delete callback[g];
+                                    }
+                                }
                             }
                             break;
                         case 'undefined':
