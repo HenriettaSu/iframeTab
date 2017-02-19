@@ -1,4 +1,4 @@
-# iframeTab plug-in for jQuery 2.3.4
+# iframeTab plug-in for jQuery 2.3.5
 
 jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件，在標籤過多情況下將自動折疊成一行，還可右鍵關閉所有標籤。
 
@@ -12,10 +12,13 @@ jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件�
 
 ## 最近更新
 
-ver 2.3.4
+ver 2.3.5
 
-1. 優化事件回調函數代碼，提高性能；
-2. 優化事件委託部分，減少傳遞；
+1. 修復新建頁面時，`iframeTab.iframeHeight()` 執行了兩次的bug；
+2. 刪除多餘的變量聲明；
+3. 優化jQuery選擇器；
+4. 逐步減少對jQuery的依賴，使用原生JavaScript，提高速率；
+5. 為了減少對Dom的遍歷，提高操作速度，html結構有所修改：標籤欄的 `<ul>` 添加父級 `<div id="tabHeader"> `，iframe的最上級元素改為  `<div id="tabBody"> `。詳情可參考文檔；
 
 
 ## 使用
@@ -67,10 +70,12 @@ var tab = iframeTab.init({
 #### 標籤欄結構
 
 ```html
-<ul>
-    <li class="active tab-keep" data-tab="my-desktop.html" data-num="0">首頁</li>
-    <li data-tab="tabPage.html">標籤頁 <i data-btn="close"></i></li>
-</ul>
+<div id="tabHeader">
+	<ul>
+    	<li class="active tab-keep" data-tab="my-desktop.html" data-num="0">首頁</li>
+    	<li data-tab="tabPage.html">標籤頁 <i data-btn="close"></i></li>
+	</ul>
+</div>>
 ```
 
 `<li>` 中的 `data-tab` 應與對應的iframe頁 `<iframe>` 中的 `src` 和 `data-iframe` 保持一致，內容應為iframe的 `src` 屬性。同時也必須包含 `data-num="0"` 。
@@ -81,7 +86,7 @@ var tab = iframeTab.init({
 #### iframe結構
 
 ```html
-<div class="tabs-body">
+<div id="tabBody">
     <div class="tab-panel tab-keep active">
         <!-- 包裹iFrame的外部元素，可按自己需求更改，如需設置，應同時在option中配置iframeBox -->
         <div class="right_col" role="main">

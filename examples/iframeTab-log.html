@@ -32,6 +32,23 @@
 	  <div class="row">
 		<div class="x_panel">
 		  <div class="x_title clearfix">
+			<h2>V2.3.5 2017.02.19</h2>
+		    <ul class="nav navbar-right panel_toolbox">
+			  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+            </ul>
+          </div>
+		  <div class="x_content">
+            <ul class="change-log">
+              <li>修復新建頁面時，<code>iframeTab.iframeHeight()</code> 執行了兩次的bug。</li>
+              <li>刪除多餘的變量聲明。</li>
+              <li>優化jQuery選擇器。</li>
+              <li>逐步減少對jQuery的依賴，使用原生JavaScript，提高速率。</li>
+              <li>為了減少對Dom的遍歷，提高操作速度，html結構有所修改：標籤欄的 <code>&lt;ul&gt;</code> 添加父級 <code>&lt;div id=&quot;tabsHeader&quot;&gt;</code>，iframe的最上級元素改為 <code>&lt;div id=&quot;tabBody&quot;&gt;</code>。詳情可參考文檔。</li>
+            </ul>
+		  </div>
+		</div>
+		<div class="x_panel">
+		  <div class="x_title clearfix">
 			<h2>V2.3.4 2017.02.03</h2>
 		    <ul class="nav navbar-right panel_toolbox">
 			  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
