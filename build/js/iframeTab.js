@@ -40,7 +40,7 @@
                 isOpen = false,
                 isSwitch = false,
                 p = isTop ? null : window.parent.document,
-                $tabUl = $('#tabsHeader ul', p),
+                $tabUl = $('#tabHeader ul', p),
                 $tabBody = $('#tabBody', p),
                 options = $.extend({
                     tabLiClass: '',
@@ -74,7 +74,7 @@
                     date = new Date().getTime(),
                     mul = that.dataset.mul,
                     reload = that.dataset.reload,
-                    $tabLi = $('#tabsHeader li', p),
+                    $tabLi = $('#tabHeader li', p),
                     $tabPan = $('.tab-panel', p),
                     tab = $tabUl.find('li[data-name="' + name + '"]').data('tab'),
                     tempLi = '<li class="active ' + tabLiClass + '" data-tab="' + link + '" data-name="' + name + '" data-num="' + date + '">' + name + '<i class="' + closesBtnClass + '" data-btn="close"></i></li>',
@@ -102,7 +102,7 @@
                         $tabUl.addClass('hide-tab');
                         $tabUl.after('<i class="' + switchBtnDown + ' fold-switch" data-btn="switch"></i>');
                         isSwitch = true;
-                        $('#tabsHeader').on('click.iframetab.switch', '[data-btn="switch"]', function () {
+                        $('#tabHeader').on('click.iframetab.switch', '[data-btn="switch"]', function () {
                             var _this = $(this);
                             _this.toggleClass(switchBtnDown);
                             _this.toggleClass(switchBtnUp);
@@ -156,7 +156,7 @@
                 }
             }
             function changeTab (cb) { // 切換標籤
-                $('#tabsHeader').on('click.iframetab', 'li:not(.active)', function () {
+                $('#tabHeader').on('click.iframetab', 'li:not(.active)', function () {
                     var $thisLi = $(this),
                         that = this,
                         liLink = that.dataset.tab,
@@ -178,14 +178,14 @@
                 });
             }
             function btnDel (cb) { // 關閉標籤
-                $('#tabsHeader').on('click.iframetab', 'li [data-btn="close"]', function (e) {
+                $('#tabHeader').on('click.iframetab', 'li [data-btn="close"]', function (e) {
                     var $this = $(this),
                         that = this,
                         thatLi = this.parentNode,
                         tab = thatLi.dataset.tab,
                         date = thatLi.dataset.num,
                         $li = $this.parent(),
-                        $tabLi = $('#tabsHeader').find('li'),
+                        $tabLi = $('#tabHeader').find('li'),
                         $prev = $li.prev(),
                         $next = $li.next(),
                         windowWidth = document.body.clientWidth,
@@ -204,7 +204,7 @@
                         countWidth += liWidth;
                     });
                     if (isSwitch && countWidth < windowWidth - menuWidth) {
-                        $('#tabsHeader').off('click.iframetab.switch').find('[data-btn="switch"]').remove();
+                        $('#tabHeader').off('click.iframetab.switch').find('[data-btn="switch"]').remove();
                         isSwitch = false;
                         $tabUl.toggleClass('hide-tab');
                         $tabUl.width('auto');
@@ -249,11 +249,11 @@
                     }
                     $('#tabContextmenu').css('top', y);
                     $(document).on('click.context.remove.pl', '[data-btn="removeAll"]', function removeAll() { // 關閉所有標籤
-                        $('#tabsHeader').find('li:not(.tab-keep)').remove();
+                        $('#tabHeader').find('li:not(.tab-keep)').remove();
                         $('.tab-panel:not(.tab-keep)').remove();
-                        $('#tabsHeader').find('li.tab-keep').click();
+                        $('#tabHeader').find('li.tab-keep').click();
                         if (isSwitch) {
-                            $('#tabsHeader').off('click.iframetab.switch').find('[data-btn="switch"]').remove();
+                            $('#tabHeader').off('click.iframetab.switch').find('[data-btn="switch"]').remove();
                             $tabUl.removeClass('hide-tab');
                             $tabUl.width('auto');
                             isSwitch = false;
@@ -261,7 +261,7 @@
                         tabList = {};
                     });
                     $(document).on('click.context.remove.sing', '[data-btn="removeExceptAct"]', function () { // 关闭激活标签外所有标签
-                        $('#tabsHeader li, .tab-panel').each(function () {
+                        $('#tabHeader li, .tab-panel').each(function () {
                             var _this = $(this),
                                 tab = this.dataset.tab;
                             if (_this.is(':not(.tab-keep)') && _this.is(':not(.active)')) {
@@ -269,9 +269,9 @@
                                 delete tabList[tab];
                             }
                         });
-                        $('#tabsHeader').find('li.active').click();
+                        $('#tabHeader').find('li.active').click();
                         if (isSwitch) {
-                            $('#tabsHeader').off('click.iframetab.switch').find('[data-btn="switch"]').remove();
+                            $('#tabHeader').off('click.iframetab.switch').find('[data-btn="switch"]').remove();
                             $tabUl.removeClass('hide-tab');
                             $tabUl.width('auto');
                             isSwitch = false;
@@ -291,7 +291,7 @@
             }
             function offEvents () { // 解除命名空間為iframetab的事件綁定
                 $(document).off('mouseup.iframetab').off('click.iframetab').off('iframetab.reloaded');
-                $('#tabsHeader').off('mousedown.iframetab').off('click.iframetab');
+                $('#tabHeader').off('mousedown.iframetab').off('click.iframetab');
             }
             function testArry (evt) {
                 return Array.isArray(evt) ? 'array' : typeof evt;
@@ -339,7 +339,7 @@
                 }
                 changeTab(changeCb);
                 btnDel(closeCb);
-                $('#tabsHeader').on('mousedown.iframetab', creatContextmenu);
+                $('#tabHeader').on('mousedown.iframetab', creatContextmenu);
             }
             if ($('[data-source]').length) {
                 $(document).on('mouseup.iframetab', '[data-source]', function () { // 點擊刷新tab
@@ -414,7 +414,7 @@
                     }
                 },
                 closeActIframe: function () {
-                    parent.$('#tabsHeader').find('li.active').find('[data-btn="close"]').click();
+                    parent.$('#tabHeader').find('li.active').find('[data-btn="close"]').click();
                 },
                 destroy: function () {
                     var i;
