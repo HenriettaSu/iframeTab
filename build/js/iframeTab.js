@@ -1,6 +1,6 @@
 /*
  * iframeTab
- * Version: 2.3.6
+ * Version: 2.3.6.1
  *
  * Plugin that can simulate browser to open links as tab and iframe in a page.
  *
@@ -14,6 +14,7 @@
     iframeTab = jQuery.prototype = {
         iframeHeight: function(updateHeight) {
             var iframes = document.getElementById('tabBody').children,
+                len = document.frames ? document.frames.length - 1 : 0,
                 ifm,
                 subWeb,
                 i,
@@ -24,7 +25,7 @@
                 ifmClass = g.getAttribute('class');
                 ifm = ifmClass.match('active') ? g.getElementsByTagName('iframe')[0] : null;
             }
-            subWeb = document.frames ? document.frames[0].document : ifm.contentDocument;
+            subWeb = document.frames ? document.frames[len].document : ifm.contentDocument;
             if (updateHeight) {
                 ifm.height = updateHeight;
             } else if (ifm !== null && subWeb !== null) {
@@ -42,6 +43,8 @@
                 p = isTop ? null : window.parent.document,
                 $tabUl = $('#tabHeader ul', p),
                 $tabBody = $('#tabBody', p),
+                currHei,
+                currWid,
                 options = $.extend({
                     tabLiClass: '',
                     tabPanClass: '',
@@ -264,7 +267,7 @@
                         }
                         tabList = {};
                     });
-                    $(document).on('click.context.remove.sing', '[data-btn="removeExceptAct"]', function () { // 关闭激活标签外所有标签
+                    $(document).on('click.context.remove.sing', '[data-btn="removeExceptAct"]', function () { // 關閉激活標籤外所有標籤
                         $('#tabHeader li, .tab-panel').each(function () {
                             var _this = $(this),
                                 tab = getData(this, 'tab');
@@ -306,15 +309,19 @@
                 return Array.isArray(evt) ? 'array' : typeof evt;
             }
             function getData (ele, key) {
-                if (!ele.dataset) {
-                    return ele.getAttribute('data-' + key);
-                }
-                return ele.dataset[key];
+                var data = ele.dataset ? ele.dataset[key] : ele.getAttribute('data-' + key);
+                return data;
             }
 
             $(document).on('iframetab.reloaded', function () {
                 $(window).resize(function () {
-                    parent.iframeTab.iframeHeight();
+                    var windowHei = $(window).height(),
+                        windowWid = $(window).width();
+                    if (!currHei || currHei !== windowHei || !currWid || currWid !== windowWid) {
+                        parent.iframeTab.iframeHeight();
+                        currHei = windowHei;
+                        currWid = windowWid;
+                    }
                 });
             });
             $(document).on('mouseup.iframetab', 'a[data-num]', stellung);
