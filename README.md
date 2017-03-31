@@ -1,4 +1,4 @@
-# iframeTab plug-in for jQuery 2.3.5.1
+# iframeTab plug-in for jQuery 2.3.6
 
 jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件，在標籤過多情況下將自動折疊成一行，還可右鍵關閉所有標籤。
 
@@ -12,19 +12,16 @@ jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件�
 
 ## 最近更新
 
+ver 2.3.6
+
+1. 字符串拼接姿勢優化；
+2. 修復右鍵窗口在最右側打開時，left沒有被清除bug；
+3. 修復IE8不支持isArray()的bug；
+4. 增加對不兼容HTML5的data屬性的瀏覽器的支持；
+
 ver 2.3.5.1
 
 1. ID格式統一，`tabsHeader` 改為 `tabHeader`；
-
-
-
-ver 2.3.5
-
-1. 修復新建頁面時，`iframeTab.iframeHeight()` 執行了兩次的bug；
-2. 刪除多餘的變量聲明；
-3. 優化jQuery選擇器；
-4. 逐步減少對jQuery的依賴，使用原生JavaScript，提高速率；
-5. 為了減少對Dom的遍歷，提高操作速度，html結構有所修改：標籤欄的 `<ul>` 添加父級 `<div id="tabHeader">`，iframe的最上級元素改為  `<div id="tabBody">`。詳情可參考文檔；
 
 
 ## 使用

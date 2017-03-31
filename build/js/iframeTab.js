@@ -1,6 +1,6 @@
 /*
  * iframeTab
- * Version: 2.3.5
+ * Version: 2.3.6
  *
  * Plugin that can simulate browser to open links as tab and iframe in a page.
  *
@@ -8,7 +8,7 @@
  *
  * License: MIT
  *
- * Released on: February 19, 2017
+ * Released on: March 31, 2017
  */
 (function () {
     iframeTab = jQuery.prototype = {
@@ -24,7 +24,7 @@
                 ifmClass = g.getAttribute('class');
                 ifm = ifmClass.match('active') ? g.getElementsByTagName('iframe')[0] : null;
             }
-            subWeb = document.frames ? document.frames['iframepage'].document : ifm.contentDocument;
+            subWeb = document.frames ? document.frames[0].document : ifm.contentDocument;
             if (updateHeight) {
                 ifm.height = updateHeight;
             } else if (ifm !== null && subWeb !== null) {
@@ -70,15 +70,21 @@
                 var $this = $(this),
                     that = this,
                     link = that.href,
-                    name = that.dataset.name ? that.dataset.name : that.innerHTML,
+                    name = getData(that, 'name') ? getData(that, 'name') : that.innerHTML,
                     date = new Date().getTime(),
-                    mul = that.dataset.mul,
-                    reload = that.dataset.reload,
+                    mul = getData(that, 'mul'),
+                    reload = getData(that, 'reload'),
                     $tabLi = $('#tabHeader li', p),
                     $tabPan = $('.tab-panel', p),
                     tab = $tabUl.find('li[data-name="' + name + '"]').data('tab'),
-                    tempLi = '<li class="active ' + tabLiClass + '" data-tab="' + link + '" data-name="' + name + '" data-num="' + date + '">' + name + '<i class="' + closesBtnClass + '" data-btn="close"></i></li>',
-                    $iframe = $('<iframe src="' + link + '" data-iframe="' + link + '" data-num="' + date + '" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onLoad="iframeTab.iframeHeight()"></iframe>');
+                    tempLiArry = [],
+                    tempLi,
+                    tempIframeArry = [],
+                    $iframe;
+                tempLiArry.push('<li class="active ', tabLiClass, '" data-tab="' , link , '" data-name="' , name , '" data-num="' , date , '">' , name , '<i class="' , closesBtnClass , '" data-btn="close"></i></li>');
+                tempLi = tempLiArry.join('');
+                tempIframeArry.push('<iframe src="', link, '" data-iframe="', link, '" data-num="', date, '" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onLoad="iframeTab.iframeHeight()"></iframe>');
+                $iframe = $(tempIframeArry.join(''));
                 $this.on('click', function (e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -159,8 +165,8 @@
                 $('#tabHeader').on('click.iframetab', 'li:not(.active)', function () {
                     var $thisLi = $(this),
                         that = this,
-                        liLink = that.dataset.tab,
-                        date = that.dataset.num,
+                        liLink = getData(that, 'tab'),
+                        date = getData(that, 'num'),
                         $liTabPan = $('.tab-panel'),
                         $liTabLi = $tabUl.find('li'),
                         $activeIframe = $tabBody.find('iframe[data-iframe="' + liLink + '"][data-num="' + date + '"]'),
@@ -182,8 +188,8 @@
                     var $this = $(this),
                         that = this,
                         thatLi = this.parentNode,
-                        tab = thatLi.dataset.tab,
-                        date = thatLi.dataset.num,
+                        tab = getData(thatLi, 'tab'),
+                        date = getData(thatLi, 'num'),
                         $li = $this.parent(),
                         $tabLi = $('#tabHeader').find('li'),
                         $prev = $li.prev(),
@@ -225,13 +231,11 @@
                     x = e.clientX,
                     y = e.clientY,
                     windowWidth = window.innerWidth,
-                    contextmenu = '<div id="tabContextmenu" class="tab-contextmenu ' + contextmenuClass + '">' +
-                        '<ul class="dropdown-menu">' +
-                        '<li><a href="javascript: void(0)" data-btn="removeAll">关闭所有标签</a></li>' +
-                        '<li><a href="javascript: void(0)" data-btn="removeExceptAct">关闭激活标签外所有标签</a></li>' +
-                        '</ul>' +
-                        '</div>',
+                    tempContextmenuArry = [],
+                    contextmenu,
                     contextmenuWidth = 180;
+                tempContextmenuArry.push('<div id="tabContextmenu" class="tab-contextmenu ', contextmenuClass, '"><ul class="dropdown-menu"><li><a href="javascript: void(0)" data-btn="removeAll">关闭所有标签</a></li><li><a href="javascript: void(0)" data-btn="removeExceptAct">关闭激活标签外所有标签</a></li></ul></div>');
+                contextmenu = tempContextmenuArry.join('');
                 if (e.which === 3) {
                     $this.on('contextmenu', function (event) {
                         event.preventDefault();
@@ -245,7 +249,7 @@
                     if (windowWidth - x > contextmenuWidth) {
                         $('#tabContextmenu').css('left', x);
                     } else {
-                        $('#tabContextmenu').css('right', contextmenuWidth);
+                        $('#tabContextmenu').css('right', contextmenuWidth).css('left', 'auto');
                     }
                     $('#tabContextmenu').css('top', y);
                     $(document).on('click.context.remove.pl', '[data-btn="removeAll"]', function removeAll() { // 關閉所有標籤
@@ -263,7 +267,7 @@
                     $(document).on('click.context.remove.sing', '[data-btn="removeExceptAct"]', function () { // 关闭激活标签外所有标签
                         $('#tabHeader li, .tab-panel').each(function () {
                             var _this = $(this),
-                                tab = this.dataset.tab;
+                                tab = getData(this, 'tab');
                             if (_this.is(':not(.tab-keep)') && _this.is(':not(.active)')) {
                                 _this.remove();
                                 delete tabList[tab];
@@ -294,7 +298,18 @@
                 $('#tabHeader').off('mousedown.iframetab').off('click.iframetab');
             }
             function testArry (evt) {
+                if (!Array.isArray) {
+                    Array.isArray = function (arg) {
+                        return Object.prototype.toString.call(arg) === '[object Array]';
+                    }
+                }
                 return Array.isArray(evt) ? 'array' : typeof evt;
+            }
+            function getData (ele, key) {
+                if (!ele.dataset) {
+                    return ele.getAttribute('data-' + key);
+                }
+                return ele.dataset[key];
             }
 
             $(document).on('iframetab.reloaded', function () {
@@ -343,7 +358,7 @@
             }
             if ($('[data-source]').length) {
                 $(document).on('mouseup.iframetab', '[data-source]', function () { // 點擊刷新tab
-                    var source = this.dataset.source;
+                    var source = getData(this, 'source');
                     $tabBody.find('iframe[src="' + source + '"]').attr('src', source);
                     iframeTab.iframeHeight();
                 });
