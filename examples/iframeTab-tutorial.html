@@ -39,7 +39,7 @@
             </div>
 			<div class="x_content">
               <p>
-                本插件是以<a href="https://colorlib.com/polygon/gentelella/" target="_blank">Gentelella</a>為框架開發的，本demo對此框架有一定依賴性，但實際使用上并非必要。
+                本插件是以 <a href="https://colorlib.com/polygon/gentelella/" target="_blank">Gentelella</a> 為UI框架開發的，本demo對此框架有一定依賴性，但實際使用上并非必要。
               </p>
               <code>
                 &lt;!DOCTYPE html&gt; <br />
@@ -164,6 +164,67 @@
 		  </div>
           <div class="x_panel">
 			<div class="x_title clearfix">
+			  <h2>CSS</h2>
+		      <ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              </ul>
+            </div>
+			<div class="x_content">
+              <p>
+                雖然css都是自由搭配，但有幾個影響功能的樣式是必須要加上的（以下代碼摘自本demo未經過編譯的iframeTab.scss文件，僅供參考，選擇器請按需自行搭配）：<br />
+                <br />
+                <code>
+                  .tabs-body {<br />
+                  &nbsp;&nbsp;.tab-panel {<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;display: none;
+                </code>&nbsp;/* 隱藏窗口 */<br />
+                <code>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&.active {<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display: block;
+                </code>&nbsp;/* 顯示窗口 */<br />
+                <code>
+	              &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+	              &nbsp;&nbsp;&nbsp;&nbsp;iframe {<br />
+	              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width: 100%;
+                </code>&nbsp;/* iframe寬度 */<br />
+                <code>
+	              &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                  &nbsp;&nbsp;}<br />
+                  }<br />
+                  .tab-contextmenu {<br />
+                  &nbsp;&nbsp;position: absolute;
+                </code>&nbsp;/* 右鍵菜單位置 */<br />
+                <code>
+                  }<br />
+                  .tabs-header {<br />
+                  &nbsp;&nbsp;ul {<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;li {<br />
+	              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&.active {<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </code>&nbsp;/* 激活狀態標籤樣式 */<br />
+                <code>
+	              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+	              &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&.hide-tab {<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height: 90px;
+                </code>&nbsp;/* 標籤欄折疊高度 */<br />
+                <code>
+                  &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                  &nbsp;&nbsp;}<br />
+                  }<br />
+                </code>
+                <br />
+                <strong>重要提示：</strong>
+                <br />
+                <ol class="change-log">
+                  <li>標籤激活狀態和窗口的顯隱務必通過 .active 控制；</li>
+                  <li>標籤關閉圖標和標籤欄折疊圖標都是自行設計的，若非項目已有使用，不建議按照本demo引用文件。兩個圖標的樣式可通過初始化時傳遞參數設置，詳情請參看 <a href="#option">配置項</a>；</li>
+                </ol>
+              </p>
+            </div>
+          </div>
+          <div class="x_panel">
+			<div class="x_title clearfix">
 			  <h2>初始化 iframeTab</h2>
 		      <ul class="nav navbar-right panel_toolbox">
 				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
@@ -190,7 +251,7 @@
               </p>
             </div>
 		  </div>
-          <div class="x_panel">
+          <div class="x_panel" id="option">
 			<div class="x_title clearfix">
 			  <h2>配置項</h2>
 		      <ul class="nav navbar-right panel_toolbox">

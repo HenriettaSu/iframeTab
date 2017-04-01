@@ -4,6 +4,8 @@ jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件�
 
 除了樣式可以自由配置，還可配置事件回調函數。為了能更好更方便地操作本插件，iframeTab提供了API去對已初始化的對象進行操作。
 
+#### 給我提供主機的離老闆最近忙於工作和公眾號，並沒有時間給我更新主頁。插件的更新日誌和使用說明請在 `example` 分支裡查看。
+
 
 ## DEMO演示 & API文檔
 
@@ -12,7 +14,11 @@ jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件�
 
 ## 最近更新
 
-ver 2.3.6.1
+ver 2.3.6.1 on 04.01.2017
+
+1. 更新教程文件和README，增加了關於樣式的說明；
+
+ver 2.3.6.1 on 03.31.2017
 
 1. 修復IE8以下，resize多次執行bug；
 
@@ -107,6 +113,43 @@ var tab = iframeTab.init({
 ```
 為 `div.tab-panel` 和 `<iframe>` 間的容器，並非必要，若需自行配置或不需要該容器，可在option中配置 `iframeBox` 參數。
 
+### CSS
+
+雖然css都是自由搭配，但有幾個影響功能的樣式是必須要加上的（以下代碼摘自本demo未經過編譯的iframeTab.scss文件，僅供參考，選擇器請按需自行搭配）：
+
+```scss
+.tabs-body {
+  .tab-panel {
+    display: none; /*隱藏窗口*/
+    &.active {
+      display: block; /*顯示窗口*/
+	}
+	iframe {
+	  width: 100%;  /*iframe寬度*/
+	}
+  }
+}
+.tab-contextmenu {
+  position: absolute; /*右鍵菜單位置*/
+}
+.tabs-header {
+  ul {
+    li {
+	  &.active {
+        /*激活狀態標籤樣式*/
+	  }
+	}
+    &.hide-tab {
+      height: 90px; /*標籤欄折疊高度*/
+    }
+  }
+}
+```
+
+#### 重要提示
+
+1. 標籤激活狀態和窗口的顯隱務必通過 `.active` 控制；
+2. 標籤關閉圖標和標籤欄折疊圖標都是自行設計的，若非項目已有使用，不建議按照本demo引用文件。兩個圖標的樣式可通過初始化時傳遞參數設置，詳情請參看教程頁面；
 
 ## gulp
 
