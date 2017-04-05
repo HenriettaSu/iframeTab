@@ -1,4 +1,4 @@
-# iframeTab plug-in for jQuery 2.3.6.1
+# iframeTab plug-in for jQuery 2.3.7
 
 jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件，在標籤過多情況下將自動折疊成一行，還可右鍵關閉所有標籤。
 
@@ -14,6 +14,13 @@ jQuery iframeTab是一個模擬瀏覽器多窗口 + 標籤開啟頁面的插件�
 
 ## 最近更新
 
+ver 2.3.7
+
+1. **重要整改：**html結構修改，原本在 `<iframe>` 上的 `data-num` 和 `data-iframe` 屬性放到 `div.tab-panel` 上，參數不變；
+2. 修復標籤爛展開狀態下，刪除標籤後，折疊按鈕無法再次出現bug；
+3. 左側菜單寬度默認值從230改為0，如需設定，可將菜單欄 `id` 設為 `leftMenu` ，或自行在初始化時通過option設定數值；
+4. 部分jQuery的代碼替換成JavaScript；
+
 ver 2.3.6.1 on 04.01.2017
 
 1. 更新教程文件和README，增加了關於樣式的說明；
@@ -21,13 +28,6 @@ ver 2.3.6.1 on 04.01.2017
 ver 2.3.6.1 on 03.31.2017
 
 1. 修復IE8以下，resize多次執行bug；
-
-ver 2.3.6
-
-1. 字符串拼接姿勢優化；
-2. 修復右鍵窗口在最右側打開時，left沒有被清除bug；
-3. 修復IE8不支持isArray()的bug；
-4. 增加對不兼容HTML5的data屬性的瀏覽器的支持；
 
 ## 使用
 
@@ -95,10 +95,10 @@ var tab = iframeTab.init({
 
 ```html
 <div id="tabBody">
-    <div class="tab-panel tab-keep active">
+    <div class="tab-panel tab-keep active" data-iframe="my-desktop.html" data-num="0">
         <!-- 包裹iFrame的外部元素，可按自己需求更改，如需設置，應同時在option中配置iframeBox -->
         <div class="right_col" role="main">
-            <iframe src="my-desktop.html" data-iframe="my-desktop.html" data-num="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onload="iframeTab.iframeHeight()" height="188"></iframe>
+            <iframe src="my-desktop.html" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" onload="iframeTab.iframeHeight()" height="188"></iframe>
         </div>
     </div>
 </div>

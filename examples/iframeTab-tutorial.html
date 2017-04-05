@@ -146,17 +146,17 @@
               <p>
                 <code>
                   &lt;div id=&quot;tabBody&quot;&gt; <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;tab-panel tab-keep active&quot;&gt;<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;tab-panel tab-keep active&quot; data-iframe=&quot;my-desktop.html&quot; data-num=&quot;0&quot;&gt;<br />
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- 包裹iFrame的外部元素，可按自己需求更改，如需設置，應同時在option中配置iframeBox --&gt;<br />
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;right_col&quot; role=&quot;main&quot;&gt;<br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;iframe src=&quot;my-desktop.html&quot; data-iframe=&quot;my-desktop.html&quot; data-num=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; onload=&quot;iframeTab.iframeHeight()&quot; height=&quot;188&quot;&gt;&lt;/iframe&gt;<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;iframe src=&quot;my-desktop.html&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; onload=&quot;iframeTab.iframeHeight()&quot; height=&quot;188&quot;&gt;&lt;/iframe&gt;<br />
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br />
                   &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt; <br />
                   &lt;/div&gt;
                 </code>
                 <br />
                 <br />
-                <code>&lt;iframe&gt;</code> 中的 <code>src</code> 和 <code>data-iframe</code> 應與對應的標籤 <code>&lt;li&gt;</code> 中的 <code>data-tab</code> 保持一致，內容應為iframe的 <code>src</code> 屬性。同時也必須包含 <code>data-num=&quot;0&quot;</code> 。<br />
+                <code>div.tab-panel</code> 中的 <code>data-iframe</code> 應與對應的標籤 <code>&lt;li&gt;</code> 中的 <code>data-tab</code> 保持一致，內容應為iframe的 <code>src</code> 屬性。同時也必須包含 <code>data-num=&quot;0&quot;</code> 。<br />
                 <code>.tab-panel.active</code> 表示當前iframe已激活，<code>.tab-panel.tab-keep</code> 表示右鍵刪除所有標籤時將保留當前iframe頁。<br />
                 <code>&lt;div class=&quot;right_col&quot; role=&quot;main&quot;&gt;</code> 為 <code>div.tab-panel</code> 和 <code>&lt;iframe&gt;</code> 間的容器，並非必要，若需自行配置或不需要該容器，可在option中配置 <code>iframeBox</code> 參數。
               </p>
